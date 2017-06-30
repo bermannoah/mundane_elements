@@ -45,6 +45,12 @@ defmodule MundaneElementsTest do
   @woff2_fixture Path.join(__DIR__, "fixtures/fixture.woff2")
   @eot_fixture Path.join(__DIR__, "fixtures/fixture.eot")
   @ttf_fixture Path.join(__DIR__, "fixtures/fixture.ttf")
+  @otf_fixture Path.join(__DIR__, "fixtures/fixture.otf")
+  @ico_fixture Path.join(__DIR__, "fixtures/fixture.ico")
+  @flv_fixture Path.join(__DIR__, "fixtures/fixture.flv")
+  @ps_fixture Path.join(__DIR__, "fixtures/fixture.ps")
+  @xz_fixture Path.join(__DIR__, "fixtures/fixture.tar.xz")
+  @sqlite_fixture Path.join(__DIR__, "fixtures/fixture.sqlite")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -285,6 +291,36 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .ttf" do
     result = MundaneElements.get_file_type(@ttf_fixture)
     assert result == :ttf
+  end
+
+  test ".get_file_type correctly identifies a .otf" do
+    result = MundaneElements.get_file_type(@otf_fixture)
+    assert result == :otf
+  end
+
+  test ".get_file_type correctly identifies a .ico" do
+    result = MundaneElements.get_file_type(@ico_fixture)
+    assert result == :ico
+  end
+
+  test ".get_file_type correctly identifies a .flv" do
+    result = MundaneElements.get_file_type(@flv_fixture)
+    assert result == :flv
+  end
+
+  test ".get_file_type correctly identifies a .ps" do
+    result = MundaneElements.get_file_type(@ps_fixture)
+    assert result == :ps
+  end
+
+  test ".get_file_type correctly identifies a .xz" do
+    result = MundaneElements.get_file_type(@xz_fixture)
+    assert result == :xz
+  end
+
+  test ".get_file_type correctly identifies a .sqlite" do
+    result = MundaneElements.get_file_type(@sqlite_fixture)
+    assert result == :sqlite
   end
 
 

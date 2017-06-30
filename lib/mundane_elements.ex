@@ -106,6 +106,18 @@ defmodule MundaneElements do
 
   @ttf_signature <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8), 0x00::size(8)>>
 
+  @otf_signature <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8), 0x00::size(8)>>
+
+  @ico_signature <<0x00::size(8), 0x00::size(8), 0x01::size(8), 0x00::size(8)>>
+
+  @flv_signature <<0x46::size(8), 0x4C::size(8), 0x56::size(8), 0x01::size(8)>>
+
+  @ps_signature <<0x25::size(8), 0x21::size(8)>>
+
+  @xz_signature <<0xFD::size(8), 0x37::size(8), 0x7A::size(8), 0x58::size(8), 0x5A::size(8), 0x00::size(8)>>
+
+  @sqlite_signature <<0x53::size(8), 0x51::size(8), 0x4C::size(8), 0x69::size(8)>>
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -125,6 +137,7 @@ defmodule MundaneElements do
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<@m4a_signature, rest::binary>>), do: :m4a
   def type(<<@ttf_signature, rest::binary>>), do: :ttf
+  def type(<<@ico_signature, rest::binary>>), do: :ico
 
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
@@ -152,6 +165,11 @@ defmodule MundaneElements do
   def type(<<@woff_signature, rest::binary>>), do: :woff
   def type(<<@woff2_signature, rest::binary>>), do: :woff2
   def type(<<@eot_signature, rest::binary>>), do: :eot
+  def type(<<@otf_signature, rest::binary>>), do: :otf
+  def type(<<@flv_signature, rest::binary>>), do: :flv
+  def type(<<@ps_signature, rest::binary>>), do: :ps
+  def type(<<@xz_signature, rest::binary>>), do: :xz
+  def type(<<@sqlite_signature, rest::binary>>), do: :sqlite
 
   def type(_), do: :unknown
 
