@@ -122,6 +122,17 @@ defmodule MundaneElements do
 
   @crx_signature <<0x43::size(8), 0x72::size(8), 0x32::size(8), 0x34::size(8)>>
 
+  @cab_signature <<0x4D::size(8), 0x53::size(8), 0x43::size(8), 0x46::size(8)>> || <<0x49::size(8), 0x53::size(8), 0x63::size(8), 0x28::size(8)>>
+
+  @deb_signature <<0x21::size(8), 0x3C::size(8), 0x61::size(8), 0x72::size(8), 0x63::size(8), 0x68::size(8), 0x3E::size(8), 0x0A::size(8), 0x64::size(8), 0x65::size(8), 0x62::size(8), 0x69::size(8), 0x61::size(8), 0x6E::size(8), 0x2D::size(8), 0x62::size(8), 0x69::size(8), 0x6E::size(8), 0x61::size(8), 0x72::size(8), 0x79::size(8)>>
+
+  @ar_signature <<0x21::size(8), 0x3C::size(8), 0x61::size(8), 0x72::size(8), 0x63::size(8), 0x68::size(8), 0x3E::size(8)>>
+
+  @rpm_signature <<0xED::size(8), 0xAB::size(8), 0xEE::size(8), 0xDB::size(8)>>
+
+  @z_signature <<0x1F::size(8), 0xA0::size(8)>> || <<0x1F::size(8), 0x9D::size(8)>>
+
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -176,6 +187,11 @@ defmodule MundaneElements do
   def type(<<@xz_signature, rest::binary>>), do: :xz
   def type(<<@sqlite_signature, rest::binary>>), do: :sqlite
   def type(<<@nes_signature, rest::binary>>), do: :nes
+  def type(<<@cab_signature, rest::binary>>), do: :cab
+  def type(<<@deb_signature, rest::binary>>), do: :deb
+  def type(<<@ar_signature, rest::binary>>), do: :ar
+  def type(<<@rpm_signature, rest::binary>>), do: :rpm
+  def type(<<@z_signature, rest::binary>>), do: :z
 
   def type(_), do: :unknown
 

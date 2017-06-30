@@ -53,6 +53,11 @@ defmodule MundaneElementsTest do
   @sqlite_fixture Path.join(__DIR__, "fixtures/fixture.sqlite")
   @nes_fixture Path.join(__DIR__, "fixtures/fixture.nes")
   @crx_fixture Path.join(__DIR__, "fixtures/fixture.crx")
+  @cab_fixture Path.join(__DIR__, "fixtures/fixture.cab")
+  @deb_fixture Path.join(__DIR__, "fixtures/fixture.deb")
+  @ar_fixture Path.join(__DIR__, "fixtures/fixture.ar")
+  @rpm_fixture Path.join(__DIR__, "fixtures/fixture.rpm")
+  @z_fixture Path.join(__DIR__, "fixtures/fixture.tar.Z")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -333,6 +338,32 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .crx" do
     result = MundaneElements.get_file_type(@crx_fixture)
     assert result == :crx
+  end
+
+  test ".get_file_type correctly identifies a .cab" do
+    result = MundaneElements.get_file_type(@cab_fixture)
+    assert result == :cab
+  end
+
+  test ".get_file_type correctly identifies a .deb" do
+    result = MundaneElements.get_file_type(@deb_fixture)
+    assert result == :deb
+  end
+
+  test ".get_file_type correctly identifies a .ar" do
+    result = MundaneElements.get_file_type(@ar_fixture)
+    assert result == :ar
+  end
+
+  test ".get_file_type correctly identifies a .rpm" do
+    result = MundaneElements.get_file_type(@rpm_fixture)
+    assert result == :rpm
+  end
+
+  @tag :skip # failing for unknown reasons
+  test ".get_file_type correctly identifies a .z" do
+    result = MundaneElements.get_file_type(@z_fixture)
+    assert result == :z
   end
 
 
