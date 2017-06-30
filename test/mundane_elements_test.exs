@@ -20,6 +20,10 @@ defmodule MundaneElementsTest do
   @bz2_fixture Path.join(__DIR__, "fixtures/fixture.bz2")
   @seven_zip_fixture Path.join(__DIR__, "fixtures/fixture.7z")
   @dmg_fixture Path.join(__DIR__, "fixtures/fixture.dmg")
+  @mp4_fixture Path.join(__DIR__, "fixtures/fixture.mp4") # There are several types to test for this. Pending.
+  @m4v_fixture Path.join(__DIR__, "fixtures/fixture.m4v")
+  @mid_fixture Path.join(__DIR__, "fixtures/fixture.mid")
+
 
   test ".get_file_type correctly identifies a jpg" do
     result = MundaneElements.get_file_type(@jpg_fixture)
@@ -116,6 +120,22 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .dmg" do
     result = MundaneElements.get_file_type(@dmg_fixture)
     assert result == :dmg
+  end
+
+  @tag :skip
+  test ".get_file_type correctly identifies a .mp4" do
+    result = MundaneElements.get_file_type(@mp4_fixture)
+    assert result == :mp4
+  end
+
+  test ".get_file_type correctly identifies a .m4v" do
+    result = MundaneElements.get_file_type(@m4v_fixture)
+    assert result == :m4v
+  end
+
+  test ".get_file_type correctly identifies a .mid" do
+    result = MundaneElements.get_file_type(@mid_fixture)
+    assert result == :mid
   end
 
 

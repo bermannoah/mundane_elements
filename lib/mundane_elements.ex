@@ -43,6 +43,9 @@ defmodule MundaneElements do
 
   @tar_signature <<0x75::size(8), 0x73::size(8), 0x74::size(8), 0x61::size(8), 0x72::size(8)>>
 
+  # This has to be above .rar for Reasons (that I don't know yet)
+  @m4v_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x56::size(8)>>
+
   @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8)>> && <<0x0::size(8)>> || <<0x1::size(8)>>
 
   @gz_signature <<0x1F::size(8), 0x8B::size(8), 0x8::size(8)>>
@@ -53,6 +56,9 @@ defmodule MundaneElements do
 
   @dmg_signature <<0x78::size(8), 0x01::size(8)>>
 
+  @mp4_signature <<0x78::size(8), 0x01::size(8)>>
+
+  @mid_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
 
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
@@ -67,12 +73,15 @@ defmodule MundaneElements do
   def type(<<@epub_signature, rest::binary>>), do: :epub
   def type(<<@xpi_signature, rest::binary>>), do: :xpi
   def type(<<@zip_signature, rest::binary>>), do: :zip
+  def type(<<@m4v_signature, rest::binary>>), do: :m4v
   def type(<<@tar_signature, rest::binary>>), do: :tar
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
   def type(<<@seven_zip_signature, rest::binary>>), do: :seven_zip
   def type(<<@dmg_signature, rest::binary>>), do: :dmg
+  def type(<<@mp4_signature, rest::binary>>), do: :mp4
+  def type(<<@mid_signature, rest::binary>>), do: :mid
 
   def type(_), do: :unknown
 
