@@ -51,6 +51,8 @@ defmodule MundaneElementsTest do
   @ps_fixture Path.join(__DIR__, "fixtures/fixture.ps")
   @xz_fixture Path.join(__DIR__, "fixtures/fixture.tar.xz")
   @sqlite_fixture Path.join(__DIR__, "fixtures/fixture.sqlite")
+  @nes_fixture Path.join(__DIR__, "fixtures/fixture.nes")
+  @crx_fixture Path.join(__DIR__, "fixtures/fixture.crx")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -321,6 +323,16 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .sqlite" do
     result = MundaneElements.get_file_type(@sqlite_fixture)
     assert result == :sqlite
+  end
+
+  test ".get_file_type correctly identifies a .nes" do
+    result = MundaneElements.get_file_type(@nes_fixture)
+    assert result == :nes
+  end
+
+  test ".get_file_type correctly identifies a .crx" do
+    result = MundaneElements.get_file_type(@crx_fixture)
+    assert result == :crx
   end
 
 

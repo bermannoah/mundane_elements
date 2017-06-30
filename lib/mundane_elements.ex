@@ -118,6 +118,10 @@ defmodule MundaneElements do
 
   @sqlite_signature <<0x53::size(8), 0x51::size(8), 0x4C::size(8), 0x69::size(8)>>
 
+  @nes_signature <<0x4E::size(8), 0x45::size(8), 0x53::size(8), 0x1A::size(8)>>
+
+  @crx_signature <<0x43::size(8), 0x72::size(8), 0x32::size(8), 0x34::size(8)>>
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -138,6 +142,7 @@ defmodule MundaneElements do
   def type(<<@m4a_signature, rest::binary>>), do: :m4a
   def type(<<@ttf_signature, rest::binary>>), do: :ttf
   def type(<<@ico_signature, rest::binary>>), do: :ico
+  def type(<<@crx_signature, rest::binary>>), do: :crx # this one technically just needs to be above swf but it works here as well
 
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
@@ -170,6 +175,7 @@ defmodule MundaneElements do
   def type(<<@ps_signature, rest::binary>>), do: :ps
   def type(<<@xz_signature, rest::binary>>), do: :xz
   def type(<<@sqlite_signature, rest::binary>>), do: :sqlite
+  def type(<<@nes_signature, rest::binary>>), do: :nes
 
   def type(_), do: :unknown
 
