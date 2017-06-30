@@ -33,6 +33,9 @@ defmodule MundaneElementsTest do
   @m4a_fixture Path.join(__DIR__, "fixtures/fixture.m4a")
   @opus_fixture Path.join(__DIR__, "fixtures/fixture.opus")
   @ogg_fixture Path.join(__DIR__, "fixtures/fixture.ogg")
+  @flac_fixture Path.join(__DIR__, "fixtures/fixture.flac")
+  @wav_fixture Path.join(__DIR__, "fixtures/fixture.wav")
+  @amr_fixture Path.join(__DIR__, "fixtures/fixture.amr")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -203,6 +206,23 @@ defmodule MundaneElementsTest do
     result = MundaneElements.get_file_type(@ogg_fixture)
     assert result == :ogg
   end
+
+  test ".get_file_type correctly identifies a .flac" do
+    result = MundaneElements.get_file_type(@flac_fixture)
+    assert result == :flac
+  end
+
+  @tag :skip # Offset
+  test ".get_file_type correctly identifies a .wav" do
+    result = MundaneElements.get_file_type(@wav_fixture)
+    assert result == :wav
+  end
+
+  test ".get_file_type correctly identifies a .amr" do
+    result = MundaneElements.get_file_type(@amr_fixture)
+    assert result == :amr
+  end
+
 
 
 

@@ -80,6 +80,12 @@ defmodule MundaneElements do
 
   @ogg_signature <<0x4F::size(8), 0x67::size(8), 0x67::size(8), 0x53::size(8)>>
 
+  @flac_signature <<0x66::size(8), 0x4C::size(8), 0x61::size(8), 0x43::size(8)>>
+
+  @wav_signature <<0x52::size(8), 0x49::size(8), 0x46::size(8), 0x46::size(8)>> && <<0x57::size(8), 0x41::size(8), 0x56::size(8), 0x45::size(8)>>
+
+  @amr_signature <<0x23::size(8), 0x21::size(8), 0x41::size(8), 0x4D::size(8), 0x52::size(8), 0x0A::size(8)>>
+
 
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
@@ -99,6 +105,7 @@ defmodule MundaneElements do
   # these have to be above rar for other reasons that I don't know yet
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<@m4a_signature, rest::binary>>), do: :m4a
+
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
@@ -114,6 +121,9 @@ defmodule MundaneElements do
   def type(<<@mp3_signature, rest::binary>>), do: :mp3
   def type(<<@opus_signature, rest::binary>>), do: :opus
   def type(<<@ogg_signature, rest::binary>>), do: :ogg
+  def type(<<@flac_signature, rest::binary>>), do: :flac
+  def type(<<@wav_signature, rest::binary>>), do: :wav
+  def type(<<@amr_signature, rest::binary>>), do: :amr
 
   def type(_), do: :unknown
 
