@@ -8,6 +8,8 @@ defmodule MundaneElementsTest do
   @cr2_fixture Path.join(__DIR__, "fixtures/fixture.cr2")
   @tif_little_endian_fixture Path.join(__DIR__, "fixtures/fixture-little-endian.tif")
   @tif_big_endian_fixture Path.join(__DIR__, "fixtures/fixture-big-endian.tif")
+  @bmp_fixture Path.join(__DIR__, "fixtures/fixture.bmp")
+  @jxr_fixture Path.join(__DIR__, "fixtures/fixture.jxr")
 
   test ".get_file_type correctly identifies a jpg" do
     result = MundaneElements.get_file_type(@jpg_fixture)
@@ -41,9 +43,14 @@ defmodule MundaneElementsTest do
     assert result == :tif
   end
 
-  test ".get_file_type correctly identifies a big endian tif" do
-    result = MundaneElements.get_file_type(@tif_big_endian_fixture)
-    assert result == :tif
+  test ".get_file_type correctly identifies a bmp" do
+    result = MundaneElements.get_file_type(@bmp_fixture)
+    assert result == :bmp
+  end
+
+  test ".get_file_type correctly identifies a jxr" do
+    result = MundaneElements.get_file_type(@jxr_fixture)
+    assert result == :jxr
   end
 
 end

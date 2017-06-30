@@ -20,22 +20,26 @@ defmodule MundaneElements do
 
   @flif_signature <<0x46::size(8), 0x4C::size(8), 0x49::size(8), 0x46::size(8)>>
 
-
   @cr2_signature <<0x49::size(8), 0x49::size(8), 0x2A::size(8), 0x0::size(8)>> ||
     <<0x4D::size(8), 0x4D::size(8), 0x0::size(8), 0x2A::size(8)>> && <<0x43::size(8), 0x52::size(8)>>
 
   @tif_signature <<0x4D::size(8), 0x4D::size(8), 0x00::size(8), 0x2A::size(8)>> ||
     <<0x49::size(16), 0x49::size(16), 0x2A::size(16), 0x00::size(16), 0x67::size(16), 0x45::size(16)>>
 
+  @bmp_signature <<0x42::size(8), 0x4D::size(8)>>
+
+  @jxr_signature <<0x49::size(8), 0x49::size(8), 0xBC::size(8)>>
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
   def type(<<@webp_signature, rest::binary>>), do: :webp
   def type(<<@flif_signature, rest::binary>>), do: :flif
-  # Needs to be before 'tif' check
-  def type(<<@tif_signature, rest::binary>>), do: :tif
   def type(<<@cr2_signature, rest::binary>>), do: :cr2
-  # def type(<<@cr2_signature_alt, rest::binary>>), do: :cr2
+  def type(<<@tif_signature, rest::binary>>), do: :tif
+  def type(<<@bmp_signature, rest::binary>>), do: :bmp
+  def type(<<@jxr_signature, rest::binary>>), do: :jxr
+
   def type(_), do: :unknown
 
 end
