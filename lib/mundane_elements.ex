@@ -46,6 +46,8 @@ defmodule MundaneElements do
   # These have to be above .rar for Reasons (that I don't know yet)
   @m4v_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x56::size(8)>>
 
+  @m4a_signature <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x41::size(8)>> || <<0x4D::size(8), 0x34::size(8), 0x41::size(8), 0x20::size(8)>>
+
   @mpg_signature <<0x0::size(8), 0x0::size(8), 0x1::size(8), 0xBA::size(8)>>
 
   @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8)>> && <<0x0::size(8)>> || <<0x1::size(8)>>
@@ -74,6 +76,11 @@ defmodule MundaneElements do
 
   @mp3_signature <<0x49::size(8), 0x44::size(8), 0x33::size(8)>> || <<0xFF::size(8), 0xFB::size(8)>>
 
+  @opus_signature <<0x4F::size(8), 0x70::size(8), 0x75::size(8), 0x73::size(8), 0x48::size(8), 0x65::size(8), 0x61::size(8), 0x64::size(8)>>
+
+  @ogg_signature <<0x4F::size(8), 0x67::size(8), 0x67::size(8), 0x53::size(8)>>
+
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -89,8 +96,9 @@ defmodule MundaneElements do
   def type(<<@zip_signature, rest::binary>>), do: :zip
   def type(<<@m4v_signature, rest::binary>>), do: :m4v
   def type(<<@tar_signature, rest::binary>>), do: :tar
-  # mpg has to be above rar for other reasons that I don't know yet
+  # these have to be above rar for other reasons that I don't know yet
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
+  def type(<<@m4a_signature, rest::binary>>), do: :m4a
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
@@ -104,6 +112,8 @@ defmodule MundaneElements do
   def type(<<@avi_signature, rest::binary>>), do: :avi
   def type(<<@wmv_signature, rest::binary>>), do: :wmv
   def type(<<@mp3_signature, rest::binary>>), do: :mp3
+  def type(<<@opus_signature, rest::binary>>), do: :opus
+  def type(<<@ogg_signature, rest::binary>>), do: :ogg
 
   def type(_), do: :unknown
 

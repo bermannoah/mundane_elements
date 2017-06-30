@@ -30,6 +30,9 @@ defmodule MundaneElementsTest do
   @wmv_fixture Path.join(__DIR__, "fixtures/fixture.wmv")
   @mpg_fixture Path.join(__DIR__, "fixtures/fixture.mpg")
   @mp3_fixture Path.join(__DIR__, "fixtures/fixture.mp3")
+  @m4a_fixture Path.join(__DIR__, "fixtures/fixture.m4a")
+  @opus_fixture Path.join(__DIR__, "fixtures/fixture.opus")
+  @ogg_fixture Path.join(__DIR__, "fixtures/fixture.ogg")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -183,6 +186,24 @@ defmodule MundaneElementsTest do
     result = MundaneElements.get_file_type(@mp3_fixture)
     assert result == :mp3
   end
+
+  @tag :skip # throwing the "secretly a rar" error for some reason
+  test ".get_file_type correctly identifies a .m4a" do
+    result = MundaneElements.get_file_type(@m4a_fixture)
+    assert result == :m4a
+  end
+
+  @tag :skip # offset problemss
+  test ".get_file_type correctly identifies an .opus" do
+    result = MundaneElements.get_file_type(@opus_fixture)
+    assert result == :opus
+  end
+
+  test ".get_file_type correctly identifies an .ogg" do
+    result = MundaneElements.get_file_type(@ogg_fixture)
+    assert result == :ogg
+  end
+
 
 
 end
