@@ -64,6 +64,7 @@ defmodule MundaneElementsTest do
   @mts_fixture Path.join(__DIR__, "fixtures/fixture.mts")
   @blend_fixture Path.join(__DIR__, "fixtures/fixture.blend")
   @bpg_fixture Path.join(__DIR__, "fixtures/fixture.bpg")
+  @unknown_fixture Path.join(__DIR__, "fixtures/fixture.mystery")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -404,6 +405,11 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .bpg" do
     result = MundaneElements.get_file_type(@bpg_fixture)
     assert result == :bpg
+  end
+
+  test ".get_file_type returns unknown if it doesn't have a signature" do
+    result = MundaneElements.get_file_type(@unknown_fixture)
+    assert result == :unknown
   end
 
 
