@@ -94,6 +94,17 @@ defmodule MundaneElements do
 
   @rtf_signature <<0x7B::size(8), 0x5C::size(8), 0x72::size(8), 0x74::size(8), 0x66::size(8)>>
 
+  @wasm_signature <<0x00::size(8), 0x61::size(8), 0x73::size(8), 0x6D::size(8)>>
+
+  @woff_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x46::size(8)>> && <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
+
+  @woff2_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x32::size(8)>> && <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
+
+  @eot_signature <<0x4c::size(8), 0x50::size(8)>> && <<0x00::size(8), 0x00::size(8), 0x01::size(8)>> ||
+    <<0x00=1::size(8), 0x00::size(8), 0x02::size(8)>> ||
+    <<0x02::size(8), 0x00::size(8), 0x02::size(8)>>
+
+  @ttf_signature <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8), 0x00::size(8)>>
 
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
@@ -113,6 +124,7 @@ defmodule MundaneElements do
   # these have to be above rar for other reasons that I don't know yet
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<@m4a_signature, rest::binary>>), do: :m4a
+  def type(<<@ttf_signature, rest::binary>>), do: :ttf
 
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
@@ -136,6 +148,10 @@ defmodule MundaneElements do
   def type(<<@exe_signature, rest::binary>>), do: :exe
   def type(<<@swf_signature, rest::binary>>), do: :swf
   def type(<<@rtf_signature, rest::binary>>), do: :rtf
+  def type(<<@wasm_signature, rest::binary>>), do: :wasm
+  def type(<<@woff_signature, rest::binary>>), do: :woff
+  def type(<<@woff2_signature, rest::binary>>), do: :woff2
+  def type(<<@eot_signature, rest::binary>>), do: :eot
 
   def type(_), do: :unknown
 

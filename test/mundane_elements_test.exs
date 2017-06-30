@@ -40,6 +40,11 @@ defmodule MundaneElementsTest do
   @exe_fixture Path.join(__DIR__, "fixtures/fixture.exe")
   @swf_fixture Path.join(__DIR__, "fixtures/fixture.swf")
   @rtf_fixture Path.join(__DIR__, "fixtures/fixture.rtf")
+  @wasm_fixture Path.join(__DIR__, "fixtures/fixture.wasm")
+  @woff_fixture Path.join(__DIR__, "fixtures/fixture.woff")
+  @woff2_fixture Path.join(__DIR__, "fixtures/fixture.woff2")
+  @eot_fixture Path.join(__DIR__, "fixtures/fixture.eot")
+  @ttf_fixture Path.join(__DIR__, "fixtures/fixture.ttf")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -251,6 +256,35 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .rtf" do
     result = MundaneElements.get_file_type(@rtf_fixture)
     assert result == :rtf
+  end
+
+  @tag :skip # no fixture for old men I mean this currently
+  test ".get_file_type correctly identifies a .wasm" do
+    result = MundaneElements.get_file_type(@wasm_fixture)
+    assert result == :wasm
+  end
+
+  @tag :skip # offset issues
+  test ".get_file_type correctly identifies a .woff" do
+    result = MundaneElements.get_file_type(@woff_fixture)
+    assert result == :woff
+  end
+
+  @tag :skip # offset issues
+  test ".get_file_type correctly identifies a .woff2" do
+    result = MundaneElements.get_file_type(@woff2_fixture)
+    assert result == :woff2
+  end
+
+  @tag :skip # offset issues
+  test ".get_file_type correctly identifies an .eot" do
+    result = MundaneElements.get_file_type(@eot_fixture)
+    assert result == :eot
+  end
+
+  test ".get_file_type correctly identifies a .ttf" do
+    result = MundaneElements.get_file_type(@ttf_fixture)
+    assert result == :ttf
   end
 
 
