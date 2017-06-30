@@ -30,6 +30,25 @@ defmodule MundaneElements do
 
   @jxr_signature <<0x49::size(8), 0x49::size(8), 0xBC::size(8)>>
 
+  @psd_signature <<0x38::size(8), 0x42::size(8), 0x50::size(8), 0x53::size(8)>>
+
+  @epub_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> &&
+    <<0x6D::size(8), 0x69::size(8), 0x6D::size(8), 0x65::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x65::size(8), 0x61::size(8), 0x70::size(8), 0x70::size(8), 0x6C::size(8), 0x69::size(8), 0x63::size(8), 0x61::size(8), 0x74::size(8), 0x69::size(8), 0x6F::size(8), 0x6E::size(8), 0x2F::size(8), 0x65::size(8), 0x70::size(8), 0x75::size(8), 0x62::size(8), 0x2B::size(8), 0x7A::size(8), 0x69::size(8), 0x70::size(8)>>
+
+  @xpi_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> &&
+    <<0x4D::size(8), 0x45::size(8), 0x54::size(8), 0x41::size(8), 0x2D::size(8), 0x49::size(8), 0x4E::size(8), 0x46::size(8), 0x2F::size(8), 0x6D::size(8), 0x6F::size(8), 0x7A::size(8), 0x69::size(8), 0x6C::size(8), 0x6C::size(8), 0x61::size(8), 0x2E::size(8), 0x72::size(8), 0x73::size(8), 0x61::size(8)>>
+
+  @zip_signature <<0x50::size(8), 0x4B::size(8)>> && (<<0x3::size(8)>> || <<0x5::size(8)>> || <<0x7::size(8)>>) &&
+		(<<0x4::size(8)>> || <<0x6::size(8)>> || <<0x8::size(8)>>)
+
+  @tar_signature <<0x75::size(8), 0x73::size(8), 0x74::size(8), 0x61::size(8), 0x72::size(8)>>
+
+  @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8)>> && <<0x0::size(8)>> || <<0x1::size(8)>>
+
+  @gz_signature <<0x1F::size(8), 0x8B::size(8), 0x8::size(8)>>
+
+  @bz2_signature <<0x42::size(8), 0x5A::size(8), 0x68::size(8)>>
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -39,6 +58,14 @@ defmodule MundaneElements do
   def type(<<@tif_signature, rest::binary>>), do: :tif
   def type(<<@bmp_signature, rest::binary>>), do: :bmp
   def type(<<@jxr_signature, rest::binary>>), do: :jxr
+  def type(<<@psd_signature, rest::binary>>), do: :psd
+  def type(<<@epub_signature, rest::binary>>), do: :epub
+  def type(<<@xpi_signature, rest::binary>>), do: :xpi
+  def type(<<@zip_signature, rest::binary>>), do: :zip
+  def type(<<@tar_signature, rest::binary>>), do: :tar
+  def type(<<@rar_signature, rest::binary>>), do: :rar
+  def type(<<@gz_signature, rest::binary>>), do: :gz
+  def type(<<@bz2_signature, rest::binary>>), do: :bz2
 
   def type(_), do: :unknown
 
