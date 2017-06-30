@@ -132,6 +132,18 @@ defmodule MundaneElements do
 
   @z_signature <<0x1F::size(8), 0xA0::size(8)>> || <<0x1F::size(8), 0x9D::size(8)>>
 
+  @lz_signature <<0x4C::size(8), 0x5A::size(8), 0x49::size(8), 0x50::size(8)>>
+
+  @msi_signature <<0xD0::size(8), 0xCF::size(8), 0x11::size(8), 0xE0::size(8), 0xA1::size(8), 0xB1::size(8), 0x1A::size(8), 0xE1::size(8)>>
+
+  @mxf_signature <<0x06::size(8), 0x0E::size(8), 0x2B::size(8), 0x34::size(8), 0x02::size(8), 0x05::size(8), 0x01::size(8), 0x01::size(8), 0x0D::size(8), 0x01::size(8), 0x02::size(8), 0x01::size(8), 0x01::size(8), 0x02::size(8)>>
+
+  @mts_signature <<0x47::size(8)>> && (<<0x47::size(8)>> || <<0x47::size(8)>> )
+
+  @blend_signature <<0x42::size(8), 0x4C::size(8), 0x45::size(8), 0x4E::size(8), 0x44::size(8), 0x45::size(8), 0x52::size(8)>>
+
+  @bpg_signature <<0x42::size(8), 0x50::size(8), 0x47::size(8), 0xFB::size(8)>>
+
 
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
@@ -192,6 +204,14 @@ defmodule MundaneElements do
   def type(<<@ar_signature, rest::binary>>), do: :ar
   def type(<<@rpm_signature, rest::binary>>), do: :rpm
   def type(<<@z_signature, rest::binary>>), do: :z
+  def type(<<@lz_signature, rest::binary>>), do: :lz
+  def type(<<@msi_signature, rest::binary>>), do: :msi
+  def type(<<@mxf_signature, rest::binary>>), do: :mxf
+  def type(<<@mts_signature, rest::binary>>), do: :mts
+  def type(<<@blend_signature, rest::binary>>), do: :blend
+  def type(<<@bpg_signature, rest::binary>>), do: :bpg
+
+  # TODO: attempt to find a .NEF signature 
 
   def type(_), do: :unknown
 

@@ -58,6 +58,12 @@ defmodule MundaneElementsTest do
   @ar_fixture Path.join(__DIR__, "fixtures/fixture.ar")
   @rpm_fixture Path.join(__DIR__, "fixtures/fixture.rpm")
   @z_fixture Path.join(__DIR__, "fixtures/fixture.tar.Z")
+  @lz_fixture Path.join(__DIR__, "fixtures/fixture.tar.lz")
+  @msi_fixture Path.join(__DIR__, "fixtures/fixture.msi")
+  @mxf_fixture Path.join(__DIR__, "fixtures/fixture.mxf")
+  @mts_fixture Path.join(__DIR__, "fixtures/fixture.mts")
+  @blend_fixture Path.join(__DIR__, "fixtures/fixture.blend")
+  @bpg_fixture Path.join(__DIR__, "fixtures/fixture.bpg")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -364,6 +370,40 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .z" do
     result = MundaneElements.get_file_type(@z_fixture)
     assert result == :z
+  end
+
+  test ".get_file_type correctly identifies a .lz" do
+    result = MundaneElements.get_file_type(@lz_fixture)
+    assert result == :lz
+  end
+
+  test ".get_file_type correctly identifies a .msi" do
+    result = MundaneElements.get_file_type(@msi_fixture)
+    assert result == :msi
+  end
+
+  @tag :skip # no fixture file for this filetype
+  test ".get_file_type correctly identifies a .mxf" do
+    result = MundaneElements.get_file_type(@mxf_fixture)
+    assert result == :mxf
+  end
+
+  @tag :skip # serious offset issues
+  test ".get_file_type correctly identifies a .mts" do
+    result = MundaneElements.get_file_type(@mts_fixture)
+    assert result == :mts
+  end
+
+  @tag :skip # no fixture file for this filetype
+  test ".get_file_type correctly identifies a .blend" do
+    result = MundaneElements.get_file_type(@blend_fixture)
+    assert result == :blend
+  end
+
+  @tag :skip # no fixture file for this filetype
+  test ".get_file_type correctly identifies a .bpg" do
+    result = MundaneElements.get_file_type(@bpg_fixture)
+    assert result == :bpg
   end
 
 
