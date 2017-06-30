@@ -23,6 +23,11 @@ defmodule MundaneElementsTest do
   @mp4_fixture Path.join(__DIR__, "fixtures/fixture.mp4") # There are several types to test for this. Pending.
   @m4v_fixture Path.join(__DIR__, "fixtures/fixture.m4v")
   @mid_fixture Path.join(__DIR__, "fixtures/fixture.mid")
+  @mkv_fixture Path.join(__DIR__, "fixtures/fixture.mkv")
+  @webm_fixture Path.join(__DIR__, "fixtures/fixture.webm")
+  @mov_fixture Path.join(__DIR__, "fixtures/fixture.mov")
+  @avi_fixture Path.join(__DIR__, "fixtures/fixture.avi")
+  @wmv_fixture Path.join(__DIR__, "fixtures/fixture.wmv")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -136,6 +141,35 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .mid" do
     result = MundaneElements.get_file_type(@mid_fixture)
     assert result == :mid
+  end
+
+  @tag :skip
+  test ".get_file_type correctly identifies a .mkv" do
+    result = MundaneElements.get_file_type(@mkv_fixture)
+    assert result == :mkv
+  end
+
+  @tag :skip
+  test ".get_file_type correctly identifies a .webm" do
+    result = MundaneElements.get_file_type(@webm_fixture)
+    assert result == :webm
+  end
+
+  @tag :skip
+  test ".get_file_type correctly identifies a .mov" do
+    result = MundaneElements.get_file_type(@mov_fixture)
+    assert result == :mov
+  end
+
+  @tag :skip
+  test ".get_file_type correctly identifies a .avi" do
+    result = MundaneElements.get_file_type(@avi_fixture)
+    assert result == :avi
+  end
+
+  test ".get_file_type correctly identifies a .wmv" do
+    result = MundaneElements.get_file_type(@wmv_fixture)
+    assert result == :wmv
   end
 
 

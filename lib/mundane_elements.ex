@@ -60,6 +60,16 @@ defmodule MundaneElements do
 
   @mid_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
 
+  @mkv_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+
+  @webm_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+
+  @mov_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+
+  @avi_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+
+  @wmv_signature <<0x30::size(8), 0x26::size(8), 0xB2::size(8), 0x75::size(8), 0x8E::size(8), 0x66::size(8), 0xCF::size(8), 0x11::size(8), 0xA6::size(8), 0xD9::size(8)>>
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -82,6 +92,11 @@ defmodule MundaneElements do
   def type(<<@dmg_signature, rest::binary>>), do: :dmg
   def type(<<@mp4_signature, rest::binary>>), do: :mp4
   def type(<<@mid_signature, rest::binary>>), do: :mid
+  def type(<<@mkv_signature, rest::binary>>), do: :mkv
+  def type(<<@webm_signature, rest::binary>>), do: :webm
+  def type(<<@mov_signature, rest::binary>>), do: :mov
+  def type(<<@avi_signature, rest::binary>>), do: :avi
+  def type(<<@wmv_signature, rest::binary>>), do: :wmv
 
   def type(_), do: :unknown
 
