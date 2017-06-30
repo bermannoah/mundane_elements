@@ -28,6 +28,8 @@ defmodule MundaneElementsTest do
   @mov_fixture Path.join(__DIR__, "fixtures/fixture.mov")
   @avi_fixture Path.join(__DIR__, "fixtures/fixture.avi")
   @wmv_fixture Path.join(__DIR__, "fixtures/fixture.wmv")
+  @mpg_fixture Path.join(__DIR__, "fixtures/fixture.mpg")
+  @mp3_fixture Path.join(__DIR__, "fixtures/fixture.mp3")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -170,6 +172,16 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .wmv" do
     result = MundaneElements.get_file_type(@wmv_fixture)
     assert result == :wmv
+  end
+
+  test ".get_file_type correctly identifies a .mpg" do
+    result = MundaneElements.get_file_type(@mpg_fixture)
+    assert result == :mpg
+  end
+
+  test ".get_file_type correctly identifies a .mp3" do
+    result = MundaneElements.get_file_type(@mp3_fixture)
+    assert result == :mp3
   end
 
 

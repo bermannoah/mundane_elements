@@ -43,8 +43,10 @@ defmodule MundaneElements do
 
   @tar_signature <<0x75::size(8), 0x73::size(8), 0x74::size(8), 0x61::size(8), 0x72::size(8)>>
 
-  # This has to be above .rar for Reasons (that I don't know yet)
+  # These have to be above .rar for Reasons (that I don't know yet)
   @m4v_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x56::size(8)>>
+
+  @mpg_signature <<0x0::size(8), 0x0::size(8), 0x1::size(8), 0xBA::size(8)>>
 
   @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8)>> && <<0x0::size(8)>> || <<0x1::size(8)>>
 
@@ -70,6 +72,8 @@ defmodule MundaneElements do
 
   @wmv_signature <<0x30::size(8), 0x26::size(8), 0xB2::size(8), 0x75::size(8), 0x8E::size(8), 0x66::size(8), 0xCF::size(8), 0x11::size(8), 0xA6::size(8), 0xD9::size(8)>>
 
+  @mp3_signature <<0x49::size(8), 0x44::size(8), 0x33::size(8)>> || <<0xFF::size(8), 0xFB::size(8)>>
+
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -85,6 +89,8 @@ defmodule MundaneElements do
   def type(<<@zip_signature, rest::binary>>), do: :zip
   def type(<<@m4v_signature, rest::binary>>), do: :m4v
   def type(<<@tar_signature, rest::binary>>), do: :tar
+  # mpg has to be above rar for other reasons that I don't know yet
+  def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
@@ -97,6 +103,7 @@ defmodule MundaneElements do
   def type(<<@mov_signature, rest::binary>>), do: :mov
   def type(<<@avi_signature, rest::binary>>), do: :avi
   def type(<<@wmv_signature, rest::binary>>), do: :wmv
+  def type(<<@mp3_signature, rest::binary>>), do: :mp3
 
   def type(_), do: :unknown
 
