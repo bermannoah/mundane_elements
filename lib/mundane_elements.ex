@@ -48,6 +48,11 @@ defmodule MundaneElements do
   @gz_signature <<0x1F::size(8), 0x8B::size(8), 0x8::size(8)>>
 
   @bz2_signature <<0x42::size(8), 0x5A::size(8), 0x68::size(8)>>
+  # Elixir will not accept a leading number here
+  @seven_zip_signature <<0x37::size(8), 0x7A::size(8), 0xBC::size(8), 0xAF::size(8), 0x27::size(8), 0x1C::size(8)>>
+
+  @dmg_signature <<0x78::size(8), 0x01::size(8)>>
+
 
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
@@ -66,6 +71,8 @@ defmodule MundaneElements do
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
+  def type(<<@seven_zip_signature, rest::binary>>), do: :seven_zip
+  def type(<<@dmg_signature, rest::binary>>), do: :dmg
 
   def type(_), do: :unknown
 

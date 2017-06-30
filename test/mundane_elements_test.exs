@@ -18,6 +18,8 @@ defmodule MundaneElementsTest do
   @rar_fixture Path.join(__DIR__, "fixtures/fixture.rar")
   @gz_fixture Path.join(__DIR__, "fixtures/fixture.tar.gz")
   @bz2_fixture Path.join(__DIR__, "fixtures/fixture.bz2")
+  @seven_zip_fixture Path.join(__DIR__, "fixtures/fixture.7z")
+  @dmg_fixture Path.join(__DIR__, "fixtures/fixture.dmg")
 
   test ".get_file_type correctly identifies a jpg" do
     result = MundaneElements.get_file_type(@jpg_fixture)
@@ -104,6 +106,16 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .bz2" do
     result = MundaneElements.get_file_type(@bz2_fixture)
     assert result == :bz2
+  end
+
+  test ".get_file_type correctly identifies a .7z" do
+    result = MundaneElements.get_file_type(@seven_zip_fixture)
+    assert result == :seven_zip
+  end
+
+  test ".get_file_type correctly identifies a .dmg" do
+    result = MundaneElements.get_file_type(@dmg_fixture)
+    assert result == :dmg
   end
 
 
