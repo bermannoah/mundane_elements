@@ -86,6 +86,14 @@ defmodule MundaneElements do
 
   @amr_signature <<0x23::size(8), 0x21::size(8), 0x41::size(8), 0x4D::size(8), 0x52::size(8), 0x0A::size(8)>>
 
+  @pdf_signature <<0x25::size(8), 0x50::size(8), 0x44::size(8), 0x46::size(8)>>
+
+  @exe_signature <<0x4D::size(8), 0x5A::size(8)>>
+
+  @swf_signature <<0x43::size(8)>> || <<0x46::size(8)>> && <<0x57::size(8), 0x53::size(8)>>
+
+  @rtf_signature <<0x7B::size(8), 0x5C::size(8), 0x72::size(8), 0x74::size(8), 0x66::size(8)>>
+
 
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
@@ -124,6 +132,10 @@ defmodule MundaneElements do
   def type(<<@flac_signature, rest::binary>>), do: :flac
   def type(<<@wav_signature, rest::binary>>), do: :wav
   def type(<<@amr_signature, rest::binary>>), do: :amr
+  def type(<<@pdf_signature, rest::binary>>), do: :pdf
+  def type(<<@exe_signature, rest::binary>>), do: :exe
+  def type(<<@swf_signature, rest::binary>>), do: :swf
+  def type(<<@rtf_signature, rest::binary>>), do: :rtf
 
   def type(_), do: :unknown
 

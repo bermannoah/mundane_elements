@@ -36,6 +36,10 @@ defmodule MundaneElementsTest do
   @flac_fixture Path.join(__DIR__, "fixtures/fixture.flac")
   @wav_fixture Path.join(__DIR__, "fixtures/fixture.wav")
   @amr_fixture Path.join(__DIR__, "fixtures/fixture.amr")
+  @pdf_fixture Path.join(__DIR__, "fixtures/fixture.pdf")
+  @exe_fixture Path.join(__DIR__, "fixtures/fixture.exe")
+  @swf_fixture Path.join(__DIR__, "fixtures/fixture.swf")
+  @rtf_fixture Path.join(__DIR__, "fixtures/fixture.rtf")
 
 
   test ".get_file_type correctly identifies a jpg" do
@@ -67,6 +71,11 @@ defmodule MundaneElementsTest do
   @tag :skip
   test ".get_file_type correctly identifies a little endian tif" do
     result = MundaneElements.get_file_type(@tif_little_endian_fixture)
+    assert result == :tif
+  end
+
+  test ".get_file_type correctly identifies a big endian tif" do
+    result = MundaneElements.get_file_type(@tif_big_endian_fixture)
     assert result == :tif
   end
 
@@ -222,6 +231,28 @@ defmodule MundaneElementsTest do
     result = MundaneElements.get_file_type(@amr_fixture)
     assert result == :amr
   end
+
+  test ".get_file_type correctly identifies a .pdf" do
+    result = MundaneElements.get_file_type(@pdf_fixture)
+    assert result == :pdf
+  end
+
+  test ".get_file_type correctly identifies an .exe" do
+    result = MundaneElements.get_file_type(@exe_fixture)
+    assert result == :exe
+  end
+
+  @tag :skip # Offset
+  test ".get_file_type correctly identifies a .swf" do
+    result = MundaneElements.get_file_type(@swf_fixture)
+    assert result == :swf
+  end
+
+  test ".get_file_type correctly identifies a .rtf" do
+    result = MundaneElements.get_file_type(@rtf_fixture)
+    assert result == :rtf
+  end
+
 
 
 
