@@ -64,8 +64,12 @@ defmodule MundaneElementsTest do
   @mts_fixture Path.join(__DIR__, "fixtures/fixture.mts")
   @blend_fixture Path.join(__DIR__, "fixtures/fixture.blend")
   @bpg_fixture Path.join(__DIR__, "fixtures/fixture.bpg")
+  @nef_fixture Path.join(__DIR__, "fixtures/fixture.nef")
   @unknown_fixture Path.join(__DIR__, "fixtures/fixture.mystery")
 
+  test ".get_file_type raises error if passed a path it can't read" do
+    catch_error(MundaneElements.get_file_type('/not/a/real/path'))
+  end
 
   test ".get_file_type correctly identifies a jpg" do
     result = MundaneElements.get_file_type(@jpg_fixture)
@@ -162,7 +166,6 @@ defmodule MundaneElementsTest do
     assert result == :dmg
   end
 
-  # @tag :skip # First attempt at solution isn't working
   test ".get_file_type correctly identifies a .mp4" do
     result = MundaneElements.get_file_type(@mp4_fixture)
     assert result == :mp4
@@ -381,6 +384,11 @@ defmodule MundaneElementsTest do
   test ".get_file_type correctly identifies a .bpg" do
     result = MundaneElements.get_file_type(@bpg_fixture)
     assert result == :bpg
+  end
+
+  test ".get_file_type correctly identifies a .nef" do
+    result = MundaneElements.get_file_type(@nef_fixture)
+    assert result == :nef
   end
 
   test ".get_file_type returns unknown if it doesn't have a signature" do

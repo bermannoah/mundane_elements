@@ -5,12 +5,11 @@ defmodule MundaneElements do
       {:ok, binary} ->
         type(binary)
         _->
-          IO.puts "Couldn't open #{path_to_file}"
+          raise ArgumentError, message: "Couldn't open #{path_to_file}"
       end
   end
 
-  @png_signature <<0x89::size(8), 0x50::size(8), 0x4E::size(8), 0x47::size(8),
-    0x0D::size(8), 0x0A::size(8), 0x1A::size(8), 0x0A::size(8)>>
+  @png_signature <<0x89::size(8), 0x50::size(8), 0x4E::size(8), 0x47::size(8), 0x0D::size(8), 0x0A::size(8), 0x1A::size(8), 0x0A::size(8)>>
 
   @jpg_signature <<0xFF::size(8), 0xD8::size(8), 0xFF::size(8)>>
 
@@ -20,14 +19,15 @@ defmodule MundaneElements do
 
   @flif_signature <<0x46::size(8), 0x4C::size(8), 0x49::size(8), 0x46::size(8)>>
 
-
   @cr2_signature <<0x49::size(8), 0x49::size(8), 0x2A::size(8), 0x0::size(8), 0x10::size(8)>> || <<0x4D::size(8), 0x4D::size(8), 0x0::size(8), 0x2A::size(8)>>
   
   @cr2_signature_alt <<0x43::size(8), 0x52::size(8)>>
 
+  @nef_signature <<0x4D::size(8), 0x4D::size(8), 0x00::size(8), 0x2A::size(8), 0x00::size(8), 0x00::size(8), 0x00::size(8), 0x08::size(8), 0x00::size(8)>>
+
   @tif_little_endian_signature <<0x49::little-integer-size(8), 0x49::little-integer-size(8), 0x2A::little-integer-size(8), 0x00::little-integer-size(8)>>
   
-  @tif_big_endian_signature <<0x4D::size(8), 0x4D::size(8), 0x00::size(8), 0x2A::size(8)>>
+  @tif_big_endian_signature <<0x4D::big-integer-size(8), 0x4D::big-integer-size(8), 0x00::big-integer-size(8), 0x2A::big-integer-size(8)>>
   
   @bmp_signature <<0x42::size(8), 0x4D::size(8)>>
 
@@ -35,30 +35,28 @@ defmodule MundaneElements do
 
   @psd_signature <<0x38::size(8), 0x42::size(8), 0x50::size(8), 0x53::size(8)>>
 
-  @epub_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> &&
-    <<0x6D::size(8), 0x69::size(8), 0x6D::size(8), 0x65::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x65::size(8), 0x61::size(8), 0x70::size(8), 0x70::size(8), 0x6C::size(8), 0x69::size(8), 0x63::size(8), 0x61::size(8), 0x74::size(8), 0x69::size(8), 0x6F::size(8), 0x6E::size(8), 0x2F::size(8), 0x65::size(8), 0x70::size(8), 0x75::size(8), 0x62::size(8), 0x2B::size(8), 0x7A::size(8), 0x69::size(8), 0x70::size(8)>>
+  @epub_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> && <<0x6D::size(8), 0x69::size(8), 0x6D::size(8), 0x65::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x65::size(8), 0x61::size(8), 0x70::size(8), 0x70::size(8), 0x6C::size(8), 0x69::size(8), 0x63::size(8), 0x61::size(8), 0x74::size(8), 0x69::size(8), 0x6F::size(8), 0x6E::size(8), 0x2F::size(8), 0x65::size(8), 0x70::size(8), 0x75::size(8), 0x62::size(8), 0x2B::size(8), 0x7A::size(8), 0x69::size(8), 0x70::size(8)>>
 
-  @xpi_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> &&
-    <<0x4D::size(8), 0x45::size(8), 0x54::size(8), 0x41::size(8), 0x2D::size(8), 0x49::size(8), 0x4E::size(8), 0x46::size(8), 0x2F::size(8), 0x6D::size(8), 0x6F::size(8), 0x7A::size(8), 0x69::size(8), 0x6C::size(8), 0x6C::size(8), 0x61::size(8), 0x2E::size(8), 0x72::size(8), 0x73::size(8), 0x61::size(8)>>
+  @xpi_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> && <<0x4D::size(8), 0x45::size(8), 0x54::size(8), 0x41::size(8), 0x2D::size(8), 0x49::size(8), 0x4E::size(8), 0x46::size(8), 0x2F::size(8), 0x6D::size(8), 0x6F::size(8), 0x7A::size(8), 0x69::size(8), 0x6C::size(8), 0x6C::size(8), 0x61::size(8), 0x2E::size(8), 0x72::size(8), 0x73::size(8), 0x61::size(8)>>
 
   @zip_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8)>> || <<0x50::size(8), 0x4B::size(8), 0x5::size(8)>> || <<0x50::size(8), 0x4B::size(8), 0x7::size(8)>> && (<<0x4::size(8)>> || <<0x6::size(8)>> || <<0x8::size(8)>>)
 
   @tar_signature <<0x75::size(8), 0x73::size(8), 0x74::size(8), 0x61::size(8), 0x72::size(8)>>
   
   @wasm_signature <<0x00::size(8), 0x61::size(8), 0x73::size(8), 0x6D::size(8)>>
-  # These have to be above RAR
+
+  @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8), 0x0::size(8)>> || <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8), 0x1::size(8)>>
+
   @m4v_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x56::size(8)>>
 
   @m4a_signature <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x41::size(8)>> || <<0x4D::size(8), 0x34::size(8), 0x41::size(8), 0x20::size(8)>>
 
   @mpg_signature <<0x0::size(8), 0x0::size(8), 0x1::size(8), 0xBA::size(8)>>
 
-  @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8), 0x0::size(8)>> || <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8), 0x1::size(8)>>
-
   @gz_signature <<0x1F::size(8), 0x8B::size(8), 0x8::size(8)>>
 
   @bz2_signature <<0x42::size(8), 0x5A::size(8), 0x68::size(8)>>
-  # Elixir will not accept a leading number here
+  # Elixir will not accept a leading number for 7z
   @seven_zip_signature <<0x37::size(8), 0x7A::size(8), 0xBC::size(8), 0xAF::size(8), 0x27::size(8), 0x1C::size(8)>>
 
   @dmg_signature <<0x78::size(8), 0x01::size(8)>>
@@ -180,6 +178,7 @@ defmodule MundaneElements do
   def type(<<@cr2_signature, _, _, _, _, _, _, _, _, @cr2_signature_alt, rest::binary>>), do: :cr2
   def type(<<@tif_little_endian_signature, rest::binary>>), do: :tif
   def type(<<@tif_big_endian_signature, rest::binary>>), do: :tif
+  def type(<<@nef_signature, rest::binary>>), do: :nef
   def type(<<@bmp_signature, rest::binary>>), do: :bmp
   def type(<<@jxr_signature, rest::binary>>), do: :jxr
   def type(<<@psd_signature, rest::binary>>), do: :psd
