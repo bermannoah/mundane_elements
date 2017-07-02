@@ -386,11 +386,6 @@ defmodule MundaneElementsTest do
     assert result == :bpg
   end
 
-  test ".get_file_type correctly identifies a .nef" do
-    result = MundaneElements.get_file_type(@nef_fixture)
-    assert result == :nef
-  end
-
   test ".get_file_type returns unknown if it doesn't have a signature" do
     result = MundaneElements.get_file_type(@unknown_fixture)
     assert result == :unknown

@@ -23,8 +23,6 @@ defmodule MundaneElements do
   
   @cr2_signature_alt <<0x43::size(8), 0x52::size(8)>>
 
-  @nef_signature <<0x4D::size(8), 0x4D::size(8), 0x00::size(8), 0x2A::size(8), 0x00::size(8), 0x00::size(8), 0x00::size(8), 0x08::size(8), 0x00::size(8)>>
-
   @tif_little_endian_signature <<0x49::little-integer-size(8), 0x49::little-integer-size(8), 0x2A::little-integer-size(8), 0x00::little-integer-size(8)>>
   
   @tif_big_endian_signature <<0x4D::big-integer-size(8), 0x4D::big-integer-size(8), 0x00::big-integer-size(8), 0x2A::big-integer-size(8)>>
@@ -178,7 +176,6 @@ defmodule MundaneElements do
   def type(<<@cr2_signature, _, _, _, _, _, _, _, _, @cr2_signature_alt, rest::binary>>), do: :cr2
   def type(<<@tif_little_endian_signature, rest::binary>>), do: :tif
   def type(<<@tif_big_endian_signature, rest::binary>>), do: :tif
-  def type(<<@nef_signature, rest::binary>>), do: :nef
   def type(<<@bmp_signature, rest::binary>>), do: :bmp
   def type(<<@jxr_signature, rest::binary>>), do: :jxr
   def type(<<@psd_signature, rest::binary>>), do: :psd
@@ -247,8 +244,6 @@ defmodule MundaneElements do
   def type(<<_, _, _, _, @mts_signature, rest::binary>>), do: :mts
   def type(<<@blend_signature, rest::binary>>), do: :blend
   def type(<<@bpg_signature, rest::binary>>), do: :bpg
-
-  # TODO: attempt to find a .NEF signature 
 
   def type(_), do: :unknown
 
