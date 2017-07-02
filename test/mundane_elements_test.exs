@@ -235,7 +235,6 @@ defmodule MundaneElementsTest do
     assert result == :flac
   end
 
-  # @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .wav" do
     result = MundaneElements.get_file_type(@wav_fixture)
     assert result == :wav
@@ -256,7 +255,6 @@ defmodule MundaneElementsTest do
     assert result == :exe
   end
 
-  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .swf" do
     result = MundaneElements.get_file_type(@swf_fixture)
     assert result == :swf
@@ -267,19 +265,16 @@ defmodule MundaneElementsTest do
     assert result == :rtf
   end
 
-  @tag :skip # unknown error
   test ".get_file_type correctly identifies a .wasm" do
     result = MundaneElements.get_file_type(@wasm_fixture)
     assert result == :wasm
   end
 
-  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .woff" do
     result = MundaneElements.get_file_type(@woff_fixture)
     assert result == :woff
   end
 
-  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .woff2" do
     result = MundaneElements.get_file_type(@woff2_fixture)
     assert result == :woff2

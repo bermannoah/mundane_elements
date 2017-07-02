@@ -46,7 +46,7 @@ defmodule MundaneElements do
   @tar_signature <<0x75::size(8), 0x73::size(8), 0x74::size(8), 0x61::size(8), 0x72::size(8)>>
   
   @wasm_signature <<0x00::size(8), 0x61::size(8), 0x73::size(8), 0x6D::size(8)>>
-  # These have to be above .rar
+  # These have to be above RAR
   @m4v_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x56::size(8)>>
 
   @m4a_signature <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x4D::size(8), 0x34::size(8), 0x41::size(8)>> || <<0x4D::size(8), 0x34::size(8), 0x41::size(8), 0x20::size(8)>>
@@ -99,13 +99,19 @@ defmodule MundaneElements do
 
   @exe_signature <<0x4D::size(8), 0x5A::size(8)>>
 
-  @swf_signature <<0x43::size(8)>> || <<0x46::size(8)>> && <<0x57::size(8), 0x53::size(8)>>
+  @swf_signature <<0x43::size(8)>> || <<0x46::size(8)>>
+  
+  @swf_signature_alt <<0x57::size(8), 0x53::size(8)>>
 
   @rtf_signature <<0x7B::size(8), 0x5C::size(8), 0x72::size(8), 0x74::size(8), 0x66::size(8)>>
 
-  @woff_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x46::size(8)>> && <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
+  @woff_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x46::size(8)>> 
+  
+  @woff_signature_alt <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
 
-  @woff2_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x32::size(8)>> && <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
+  @woff2_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x32::size(8)>>
+  
+  @woff2_signature_alt <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
 
   @eot_signature <<0x4c::size(8), 0x50::size(8)>> && <<0x00::size(8), 0x00::size(8), 0x01::size(8)>> ||
     <<0x00=1::size(8), 0x00::size(8), 0x02::size(8)>> ||
@@ -199,11 +205,12 @@ defmodule MundaneElements do
   def type(<<@pdf_signature, rest::binary>>), do: :pdf
   def type(<<@exe_signature, rest::binary>>), do: :exe
   def type(<<@crx_signature, rest::binary>>), do: :crx 
-  def type(<<@swf_signature, rest::binary>>), do: :swf
+  # The SWF check below is missing the first part of the signature and may not be safe to use.
+  def type(<<_, @swf_signature_alt, rest::binary>>), do: :swf
   def type(<<@rtf_signature, rest::binary>>), do: :rtf
   def type(<<@wasm_signature, rest::binary>>), do: :wasm
-  def type(<<@woff_signature, rest::binary>>), do: :woff
-  def type(<<@woff2_signature, rest::binary>>), do: :woff2
+  def type(<<@woff_signature, @woff_signature_alt, rest::binary>>), do: :woff
+  def type(<<@woff2_signature, @woff2_signature_alt, rest::binary>>), do: :woff2
   def type(<<@eot_signature, rest::binary>>), do: :eot
   def type(<<@otf_signature, rest::binary>>), do: :otf
   def type(<<@flv_signature, rest::binary>>), do: :flv
