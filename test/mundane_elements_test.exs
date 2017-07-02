@@ -190,13 +190,11 @@ defmodule MundaneElementsTest do
     assert result == :webm
   end
 
-  # @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .mov" do
     result = MundaneElements.get_file_type(@mov_fixture)
     assert result == :mov
   end
 
-  @tag :skip # Needs placeholders _, _, _, in middle of check.
   test ".get_file_type correctly identifies a .avi" do
     result = MundaneElements.get_file_type(@avi_fixture)
     assert result == :avi

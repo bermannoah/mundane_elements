@@ -75,7 +75,9 @@ defmodule MundaneElements do
 
   @mov_signature_alt <<0x66::size(8), 0x72::size(8), 0x65::size(8), 0x65::size(8)>> || <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>> || <<0x6D::size(8), 0x64::size(8), 0x61::size(8), 0x74::size(8)>> || <<0x77::size(8), 0x69::size(8), 0x64::size(8), 0x65::size(8)>>
 
-  @avi_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+  @avi_signature <<0x52::size(8), 0x49::size(8), 0x46::size(8), 0x46::size(8)>>
+  
+  @avi_signature_alt <<0x41::size(8), 0x56::size(8), 0x49::size(8)>>
 
   @wmv_signature <<0x30::size(8), 0x26::size(8), 0xB2::size(8), 0x75::size(8), 0x8E::size(8), 0x66::size(8), 0xCF::size(8), 0x11::size(8), 0xA6::size(8), 0xD9::size(8)>>
 
@@ -184,7 +186,8 @@ defmodule MundaneElements do
   def type(<<@webm_signature, rest::binary>>), do: :webm
   def type(<<@mov_signature, rest::binary>>), do: :mov
   def type(<<_, _, _, _, @mov_signature_alt, rest::binary>>), do: :mov
-  def type(<<@avi_signature, rest::binary>>), do: :avi
+  # The AVI check below is missing the first part of the signature and may not be safe to use.
+  def type(<<_, _, _, _, _, _, _, _, @avi_signature_alt, rest::binary>>), do: :avi 
   def type(<<@wmv_signature, rest::binary>>), do: :wmv
   def type(<<@mp3_signature, rest::binary>>), do: :mp3
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @opus_signature, rest::binary>>), do: :opus
