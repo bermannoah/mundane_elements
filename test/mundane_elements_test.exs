@@ -280,7 +280,6 @@ defmodule MundaneElementsTest do
     assert result == :woff2
   end
 
-  @tag :skip # Internal and external offset _, _, 
   test ".get_file_type correctly identifies an .eot" do
     result = MundaneElements.get_file_type(@eot_fixture)
     assert result == :eot
@@ -351,10 +350,9 @@ defmodule MundaneElementsTest do
     assert result == :rpm
   end
 
-  @tag :skip # failing for unknown reasons as should be working. Maybe fixture is bad?
   test ".get_file_type correctly identifies a .z" do
     result = MundaneElements.get_file_type(@z_fixture)
-    assert result == :z
+    assert result == :Z
   end
 
   test ".get_file_type correctly identifies a .lz" do
@@ -372,7 +370,6 @@ defmodule MundaneElementsTest do
     assert result == :mxf
   end
 
-  @tag :skip # serious offset issues
   test ".get_file_type correctly identifies a .mts" do
     result = MundaneElements.get_file_type(@mts_fixture)
     assert result == :mts
