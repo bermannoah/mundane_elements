@@ -92,7 +92,7 @@ defmodule MundaneElementsTest do
     assert result == :cr2
   end
 
-  @tag :skip
+  @tag :skip # Strange lil endian issues
   test ".get_file_type correctly identifies a little endian tif" do
     result = MundaneElements.get_file_type(@tif_little_endian_fixture)
     assert result == :tif
@@ -272,7 +272,7 @@ defmodule MundaneElementsTest do
     assert result == :rtf
   end
 
-  @tag :skip # do not yet have a fixture for this file
+  @tag :skip # unknown error
   test ".get_file_type correctly identifies a .wasm" do
     result = MundaneElements.get_file_type(@wasm_fixture)
     assert result == :wasm
@@ -377,7 +377,6 @@ defmodule MundaneElementsTest do
     assert result == :msi
   end
 
-  @tag :skip # no fixture file for this filetype
   test ".get_file_type correctly identifies a .mxf" do
     result = MundaneElements.get_file_type(@mxf_fixture)
     assert result == :mxf
@@ -389,13 +388,11 @@ defmodule MundaneElementsTest do
     assert result == :mts
   end
 
-  @tag :skip # no fixture file for this filetype
   test ".get_file_type correctly identifies a .blend" do
     result = MundaneElements.get_file_type(@blend_fixture)
     assert result == :blend
   end
 
-  @tag :skip # no fixture file for this filetype
   test ".get_file_type correctly identifies a .bpg" do
     result = MundaneElements.get_file_type(@bpg_fixture)
     assert result == :bpg
@@ -405,9 +402,5 @@ defmodule MundaneElementsTest do
     result = MundaneElements.get_file_type(@unknown_fixture)
     assert result == :unknown
   end
-
-
-
-
 
 end
