@@ -73,7 +73,7 @@ defmodule MundaneElements do
 
   @mov_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x14::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>>
 
-  @mov_signature_alt <<0x66::size(8), 0x72::size(8), 0x65::size(8), 0x65::size(8)>> || <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>> || <<0x6D::size(8), 0x64::size(8), 0x61::size(8), 0x74::size(8)>> || <<0x77::size(8), 0x69::size(8), 0x64::size(8), 0x65::size(8)>>
+  @mov_signature_with_offset <<0x66::size(8), 0x72::size(8), 0x65::size(8), 0x65::size(8)>> || <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>> || <<0x6D::size(8), 0x64::size(8), 0x61::size(8), 0x74::size(8)>> || <<0x77::size(8), 0x69::size(8), 0x64::size(8), 0x65::size(8)>>
 
   @avi_signature <<0x52::size(8), 0x49::size(8), 0x46::size(8), 0x46::size(8)>>
   
@@ -89,7 +89,9 @@ defmodule MundaneElements do
 
   @flac_signature <<0x66::size(8), 0x4C::size(8), 0x61::size(8), 0x43::size(8)>>
 
-  @wav_signature <<0x52::size(8), 0x49::size(8), 0x46::size(8), 0x46::size(8)>> && <<0x57::size(8), 0x41::size(8), 0x56::size(8), 0x45::size(8)>>
+  @wav_signature <<0x52::size(8), 0x49::size(8), 0x46::size(8), 0x46::size(8)>>
+  
+  @wav_signature_alt <<0x57::size(8), 0x41::size(8), 0x56::size(8), 0x45::size(8)>>
 
   @amr_signature <<0x23::size(8), 0x21::size(8), 0x41::size(8), 0x4D::size(8), 0x52::size(8), 0x0A::size(8)>>
 
@@ -166,15 +168,13 @@ defmodule MundaneElements do
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @xpi_signature, rest::binary>>), do: :xpi
   def type(<<@zip_signature, rest::binary>>), do: :zip
   def type(<<@m4v_signature, rest::binary>>), do: :m4v
-  # At the moment the monstrosity below seems to be the best way to handle this offset for .tar files
+  # At the moment the monstrosity below seems to be the best way to handle this offset for TAR files
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @tar_signature, rest::binary>>), do: :tar
-  # These must be above rar
+  # These must be above RAR
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<_, _, _, _, @m4a_signature, rest::binary>>), do: :m4a
   def type(<<@ttf_signature, rest::binary>>), do: :ttf
   def type(<<@ico_signature, rest::binary>>), do: :ico
-  def type(<<@crx_signature, rest::binary>>), do: :crx # this one technically just needs to be above swf but it works here as well
-
   def type(<<@rar_signature, rest::binary>>), do: :rar
   def type(<<@gz_signature, rest::binary>>), do: :gz
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
@@ -185,7 +185,7 @@ defmodule MundaneElements do
   def type(<<@mkv_signature, rest::binary>>), do: :mkv
   def type(<<@webm_signature, rest::binary>>), do: :webm
   def type(<<@mov_signature, rest::binary>>), do: :mov
-  def type(<<_, _, _, _, @mov_signature_alt, rest::binary>>), do: :mov
+  def type(<<_, _, _, _, @mov_signature_with_offset, rest::binary>>), do: :mov
   # The AVI check below is missing the first part of the signature and may not be safe to use.
   def type(<<_, _, _, _, _, _, _, _, @avi_signature_alt, rest::binary>>), do: :avi 
   def type(<<@wmv_signature, rest::binary>>), do: :wmv
@@ -193,10 +193,12 @@ defmodule MundaneElements do
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @opus_signature, rest::binary>>), do: :opus
   def type(<<@ogg_signature, rest::binary>>), do: :ogg
   def type(<<@flac_signature, rest::binary>>), do: :flac
-  def type(<<@wav_signature, rest::binary>>), do: :wav
+  # The WAV check below is missing the first part of the signature and may not be safe to use.
+  def type(<<_, _, _, _, _, _, _, _, @wav_signature_alt, rest::binary>>), do: :wav
   def type(<<@amr_signature, rest::binary>>), do: :amr
   def type(<<@pdf_signature, rest::binary>>), do: :pdf
   def type(<<@exe_signature, rest::binary>>), do: :exe
+  def type(<<@crx_signature, rest::binary>>), do: :crx 
   def type(<<@swf_signature, rest::binary>>), do: :swf
   def type(<<@rtf_signature, rest::binary>>), do: :rtf
   def type(<<@wasm_signature, rest::binary>>), do: :wasm

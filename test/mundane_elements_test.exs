@@ -235,7 +235,7 @@ defmodule MundaneElementsTest do
     assert result == :flac
   end
 
-  @tag :skip # Internal offset _, _, 
+  # @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .wav" do
     result = MundaneElements.get_file_type(@wav_fixture)
     assert result == :wav
