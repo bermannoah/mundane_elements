@@ -20,12 +20,15 @@ defmodule MundaneElements do
 
   @flif_signature <<0x46::size(8), 0x4C::size(8), 0x49::size(8), 0x46::size(8)>>
 
-  @cr2_signature <<0x49::size(8), 0x49::size(8), 0x2A::size(8), 0x0::size(8)>> ||
-    <<0x4D::size(8), 0x4D::size(8), 0x0::size(8), 0x2A::size(8)>> && <<0x43::size(8), 0x52::size(8)>>
 
-  @tif_signature <<0x4D::size(8), 0x4D::size(8), 0x00::size(8), 0x2A::size(8)>> ||
-    <<0x49::size(16), 0x49::size(16), 0x2A::size(16), 0x00::size(16), 0x67::size(16), 0x45::size(16)>>
+  @cr2_signature <<0x49::size(8), 0x49::size(8), 0x2A::size(8), 0x0::size(8), 0x10::size(8)>> || <<0x4D::size(8), 0x4D::size(8), 0x0::size(8), 0x2A::size(8)>>
+  
+  @cr2_signature_alt <<0x43::size(8), 0x52::size(8)>>
 
+  @tif_little_endian_signature <<0x49::little-integer-size(8), 0x49::little-integer-size(8), 0x2A::little-integer-size(8), 0x00::little-integer-size(8)>>
+  
+  @tif_big_endian_signature <<0x4D::size(8), 0x4D::size(8), 0x00::size(8), 0x2A::size(8)>>
+  
   @bmp_signature <<0x42::size(8), 0x4D::size(8)>>
 
   @jxr_signature <<0x49::size(8), 0x49::size(8), 0xBC::size(8)>>
@@ -147,8 +150,11 @@ defmodule MundaneElements do
   def type(<<@gif_signature, rest::binary>>), do: :gif
   def type(<<_, _, _, _, _, _, _, _, @webp_signature, rest::binary>>), do: :webp
   def type(<<@flif_signature, rest::binary>>), do: :flif
+  # This is the first version of the signature
   def type(<<@cr2_signature, rest::binary>>), do: :cr2
-  def type(<<@tif_signature, rest::binary>>), do: :tif
+  def type(<<@cr2_signature, _, _, _, _, _, _, _, _, @cr2_signature_alt, rest::binary>>), do: :cr2
+  def type(<<@tif_little_endian_signature, rest::binary>>), do: :tif
+  def type(<<@tif_big_endian_signature, rest::binary>>), do: :tif
   def type(<<@bmp_signature, rest::binary>>), do: :bmp
   def type(<<@jxr_signature, rest::binary>>), do: :jxr
   def type(<<@psd_signature, rest::binary>>), do: :psd
@@ -156,9 +162,9 @@ defmodule MundaneElements do
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @xpi_signature, rest::binary>>), do: :xpi
   def type(<<@zip_signature, rest::binary>>), do: :zip
   def type(<<@m4v_signature, rest::binary>>), do: :m4v
-  # At the moment the monstrosity below seems to be the best way to handle this offset.
+  # At the moment the monstrosity below seems to be the best way to handle this offset for .tar files
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @tar_signature, rest::binary>>), do: :tar
-  # these have to be above rar for other reasons that I don't know yet
+  # These must be above rar
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<_, _, _, _, @m4a_signature, rest::binary>>), do: :m4a
   def type(<<@ttf_signature, rest::binary>>), do: :ttf

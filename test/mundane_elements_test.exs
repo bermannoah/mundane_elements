@@ -92,7 +92,6 @@ defmodule MundaneElementsTest do
     assert result == :cr2
   end
 
-  @tag :skip # Strange lil endian issues
   test ".get_file_type correctly identifies a little endian tif" do
     result = MundaneElements.get_file_type(@tif_little_endian_fixture)
     assert result == :tif
@@ -128,7 +127,6 @@ defmodule MundaneElementsTest do
     assert result == :xpi
   end
 
-  # @tag :skip # Not sure why this isn't working.
   test ".get_file_type correctly identifies a zip" do
     result = MundaneElements.get_file_type(@zip_fixture)
     assert result == :zip
