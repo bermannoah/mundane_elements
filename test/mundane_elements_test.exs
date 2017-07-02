@@ -128,13 +128,12 @@ defmodule MundaneElementsTest do
     assert result == :xpi
   end
 
-  @tag :skip # Not sure why this isn't working.
+  # @tag :skip # Not sure why this isn't working.
   test ".get_file_type correctly identifies a zip" do
     result = MundaneElements.get_file_type(@zip_fixture)
     assert result == :zip
   end
 
-  @tag :skip # The offset for this is 257. Come back when you have a better way to do that.
   test ".get_file_type correctly identifies a tar" do
     result = MundaneElements.get_file_type(@tar_fixture)
     assert result == :tar

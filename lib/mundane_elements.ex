@@ -145,7 +145,6 @@ defmodule MundaneElements do
 
   @bpg_signature <<0x42::size(8), 0x50::size(8), 0x47::size(8), 0xFB::size(8)>>
 
-
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
@@ -160,7 +159,8 @@ defmodule MundaneElements do
   def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @xpi_signature, rest::binary>>), do: :xpi
   def type(<<@zip_signature, rest::binary>>), do: :zip
   def type(<<@m4v_signature, rest::binary>>), do: :m4v
-  def type(<<@tar_signature, rest::binary>>), do: :tar
+  # At the moment the monstrosity below seems to be the best way to handle this offset.
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @tar_signature, rest::binary>>), do: :tar
   # these have to be above rar for other reasons that I don't know yet
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
   def type(<<_, _, _, _, @m4a_signature, rest::binary>>), do: :m4a
