@@ -82,7 +82,6 @@ defmodule MundaneElementsTest do
     assert result == :gif
   end
 
-  @tag :skip
   test ".get_file_type correctly identifies a webp" do
     result = MundaneElements.get_file_type(@webp_fixture)
     assert result == :webp
@@ -119,31 +118,28 @@ defmodule MundaneElementsTest do
     assert result == :psd
   end
 
-  @tag :skip
   test ".get_file_type correctly identifies a epub" do
     result = MundaneElements.get_file_type(@epub_fixture)
     assert result == :epub
   end
 
-  @tag :skip
   test ".get_file_type correctly identifies an xpi" do
     result = MundaneElements.get_file_type(@xpi_fixture)
     assert result == :xpi
   end
 
-  @tag :skip
+  @tag :skip # Not sure why this isn't working.
   test ".get_file_type correctly identifies a zip" do
     result = MundaneElements.get_file_type(@zip_fixture)
     assert result == :zip
   end
 
-  @tag :skip
+  @tag :skip # The offset for this is 257. Come back when you have a better way to do that.
   test ".get_file_type correctly identifies a tar" do
     result = MundaneElements.get_file_type(@tar_fixture)
     assert result == :tar
   end
 
-  @tag :skip
   test ".get_file_type correctly identifies a rar" do
     result = MundaneElements.get_file_type(@rar_fixture)
     assert result == :rar
@@ -169,7 +165,7 @@ defmodule MundaneElementsTest do
     assert result == :dmg
   end
 
-  @tag :skip
+  @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .mp4" do
     result = MundaneElements.get_file_type(@mp4_fixture)
     assert result == :mp4
@@ -185,25 +181,25 @@ defmodule MundaneElementsTest do
     assert result == :mid
   end
 
-  @tag :skip
+  @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .mkv" do
     result = MundaneElements.get_file_type(@mkv_fixture)
     assert result == :mkv
   end
 
-  @tag :skip
+  @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .webm" do
     result = MundaneElements.get_file_type(@webm_fixture)
     assert result == :webm
   end
 
-  @tag :skip
+  @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .mov" do
     result = MundaneElements.get_file_type(@mov_fixture)
     assert result == :mov
   end
 
-  @tag :skip
+  @tag :skip # Needs placeholders _, _, _, in middle of check.
   test ".get_file_type correctly identifies a .avi" do
     result = MundaneElements.get_file_type(@avi_fixture)
     assert result == :avi
@@ -224,13 +220,11 @@ defmodule MundaneElementsTest do
     assert result == :mp3
   end
 
-  @tag :skip # throwing the "secretly a rar" error for some reason
   test ".get_file_type correctly identifies a .m4a" do
     result = MundaneElements.get_file_type(@m4a_fixture)
     assert result == :m4a
   end
 
-  @tag :skip # offset problemss
   test ".get_file_type correctly identifies an .opus" do
     result = MundaneElements.get_file_type(@opus_fixture)
     assert result == :opus
@@ -246,7 +240,7 @@ defmodule MundaneElementsTest do
     assert result == :flac
   end
 
-  @tag :skip # Offset
+  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .wav" do
     result = MundaneElements.get_file_type(@wav_fixture)
     assert result == :wav
@@ -267,7 +261,7 @@ defmodule MundaneElementsTest do
     assert result == :exe
   end
 
-  @tag :skip # Offset
+  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .swf" do
     result = MundaneElements.get_file_type(@swf_fixture)
     assert result == :swf
@@ -278,25 +272,25 @@ defmodule MundaneElementsTest do
     assert result == :rtf
   end
 
-  @tag :skip # no fixture for old men I mean this currently
+  @tag :skip # do not yet have a fixture for this file
   test ".get_file_type correctly identifies a .wasm" do
     result = MundaneElements.get_file_type(@wasm_fixture)
     assert result == :wasm
   end
 
-  @tag :skip # offset issues
+  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .woff" do
     result = MundaneElements.get_file_type(@woff_fixture)
     assert result == :woff
   end
 
-  @tag :skip # offset issues
+  @tag :skip # Internal offset _, _, 
   test ".get_file_type correctly identifies a .woff2" do
     result = MundaneElements.get_file_type(@woff2_fixture)
     assert result == :woff2
   end
 
-  @tag :skip # offset issues
+  @tag :skip # Internal and external offset _, _, 
   test ".get_file_type correctly identifies an .eot" do
     result = MundaneElements.get_file_type(@eot_fixture)
     assert result == :eot
@@ -367,7 +361,7 @@ defmodule MundaneElementsTest do
     assert result == :rpm
   end
 
-  @tag :skip # failing for unknown reasons
+  @tag :skip # failing for unknown reasons as should be working. Maybe fixture is bad?
   test ".get_file_type correctly identifies a .z" do
     result = MundaneElements.get_file_type(@z_fixture)
     assert result == :z

@@ -38,8 +38,8 @@ defmodule MundaneElements do
   @xpi_signature <<0x50::size(8), 0x4B::size(8), 0x3::size(8), 0x4::size(8)>> &&
     <<0x4D::size(8), 0x45::size(8), 0x54::size(8), 0x41::size(8), 0x2D::size(8), 0x49::size(8), 0x4E::size(8), 0x46::size(8), 0x2F::size(8), 0x6D::size(8), 0x6F::size(8), 0x7A::size(8), 0x69::size(8), 0x6C::size(8), 0x6C::size(8), 0x61::size(8), 0x2E::size(8), 0x72::size(8), 0x73::size(8), 0x61::size(8)>>
 
-  @zip_signature <<0x50::size(8), 0x4B::size(8)>> && (<<0x3::size(8)>> || <<0x5::size(8)>> || <<0x7::size(8)>>) &&
-		(<<0x4::size(8)>> || <<0x6::size(8)>> || <<0x8::size(8)>>)
+  @zip_signature <<0x50::size(8), 0x4B::size(8)>> && (<<0x3::size(8)>> || <<0x5::size(8)>> || <<0x7::size(8)>> &&
+		<<0x4::size(8)>> || <<0x6::size(8)>> || <<0x8::size(8)>>)
 
   @tar_signature <<0x75::size(8), 0x73::size(8), 0x74::size(8), 0x61::size(8), 0x72::size(8)>>
 
@@ -50,7 +50,7 @@ defmodule MundaneElements do
 
   @mpg_signature <<0x0::size(8), 0x0::size(8), 0x1::size(8), 0xBA::size(8)>>
 
-  @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8)>> && <<0x0::size(8)>> || <<0x1::size(8)>>
+  @rar_signature <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8), 0x0::size(8)>> || <<0x52::size(8), 0x61::size(8), 0x72::size(8), 0x21::size(8), 0x1A::size(8), 0x7::size(8), 0x1::size(8)>>
 
   @gz_signature <<0x1F::size(8), 0x8B::size(8), 0x8::size(8)>>
 
@@ -148,21 +148,21 @@ defmodule MundaneElements do
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@gif_signature, rest::binary>>), do: :gif
-  def type(<<@webp_signature, rest::binary>>), do: :webp
+  def type(<<_, _, _, _, _, _, _, _, @webp_signature, rest::binary>>), do: :webp
   def type(<<@flif_signature, rest::binary>>), do: :flif
   def type(<<@cr2_signature, rest::binary>>), do: :cr2
   def type(<<@tif_signature, rest::binary>>), do: :tif
   def type(<<@bmp_signature, rest::binary>>), do: :bmp
   def type(<<@jxr_signature, rest::binary>>), do: :jxr
   def type(<<@psd_signature, rest::binary>>), do: :psd
-  def type(<<@epub_signature, rest::binary>>), do: :epub
-  def type(<<@xpi_signature, rest::binary>>), do: :xpi
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @epub_signature, rest::binary>>), do: :epub
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @xpi_signature, rest::binary>>), do: :xpi
   def type(<<@zip_signature, rest::binary>>), do: :zip
   def type(<<@m4v_signature, rest::binary>>), do: :m4v
   def type(<<@tar_signature, rest::binary>>), do: :tar
   # these have to be above rar for other reasons that I don't know yet
   def type(<<@mpg_signature, rest::binary>>), do: :mpg
-  def type(<<@m4a_signature, rest::binary>>), do: :m4a
+  def type(<<_, _, _, _, @m4a_signature, rest::binary>>), do: :m4a
   def type(<<@ttf_signature, rest::binary>>), do: :ttf
   def type(<<@ico_signature, rest::binary>>), do: :ico
   def type(<<@crx_signature, rest::binary>>), do: :crx # this one technically just needs to be above swf but it works here as well
@@ -180,7 +180,7 @@ defmodule MundaneElements do
   def type(<<@avi_signature, rest::binary>>), do: :avi
   def type(<<@wmv_signature, rest::binary>>), do: :wmv
   def type(<<@mp3_signature, rest::binary>>), do: :mp3
-  def type(<<@opus_signature, rest::binary>>), do: :opus
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @opus_signature, rest::binary>>), do: :opus
   def type(<<@ogg_signature, rest::binary>>), do: :ogg
   def type(<<@flac_signature, rest::binary>>), do: :flac
   def type(<<@wav_signature, rest::binary>>), do: :wav
