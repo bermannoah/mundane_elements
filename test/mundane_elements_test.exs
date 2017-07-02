@@ -20,7 +20,7 @@ defmodule MundaneElementsTest do
   @bz2_fixture Path.join(__DIR__, "fixtures/fixture.bz2")
   @seven_zip_fixture Path.join(__DIR__, "fixtures/fixture.7z")
   @dmg_fixture Path.join(__DIR__, "fixtures/fixture.dmg")
-  @mp4_fixture Path.join(__DIR__, "fixtures/fixture.mp4") # There are several types to test for this. Pending.
+  @mp4_fixture Path.join(__DIR__, "fixtures/fixture.mp4")
   @m4v_fixture Path.join(__DIR__, "fixtures/fixture.m4v")
   @mid_fixture Path.join(__DIR__, "fixtures/fixture.mid")
   @mkv_fixture Path.join(__DIR__, "fixtures/fixture.mkv")
