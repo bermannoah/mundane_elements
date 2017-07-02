@@ -190,7 +190,7 @@ defmodule MundaneElementsTest do
     assert result == :webm
   end
 
-  @tag :skip # Needs more complex logic.
+  # @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .mov" do
     result = MundaneElements.get_file_type(@mov_fixture)
     assert result == :mov

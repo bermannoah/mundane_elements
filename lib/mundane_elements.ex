@@ -71,7 +71,9 @@ defmodule MundaneElements do
 
   @webm_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
 
-  @mov_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+  @mov_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x14::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>>
+
+  @mov_signature_alt <<0x66::size(8), 0x72::size(8), 0x65::size(8), 0x65::size(8)>> || <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>> || <<0x6D::size(8), 0x64::size(8), 0x61::size(8), 0x74::size(8)>> || <<0x77::size(8), 0x69::size(8), 0x64::size(8), 0x65::size(8)>>
 
   @avi_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
 
@@ -181,6 +183,7 @@ defmodule MundaneElements do
   def type(<<@mkv_signature, rest::binary>>), do: :mkv
   def type(<<@webm_signature, rest::binary>>), do: :webm
   def type(<<@mov_signature, rest::binary>>), do: :mov
+  def type(<<_, _, _, _, @mov_signature_alt, rest::binary>>), do: :mov
   def type(<<@avi_signature, rest::binary>>), do: :avi
   def type(<<@wmv_signature, rest::binary>>), do: :wmv
   def type(<<@mp3_signature, rest::binary>>), do: :mp3
