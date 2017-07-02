@@ -28,6 +28,6 @@ defmodule MundaneElements.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:benchfella, "~> 0.3.0"}]
   end
 end

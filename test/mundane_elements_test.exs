@@ -64,11 +64,11 @@ defmodule MundaneElementsTest do
   @mts_fixture Path.join(__DIR__, "fixtures/fixture.mts")
   @blend_fixture Path.join(__DIR__, "fixtures/fixture.blend")
   @bpg_fixture Path.join(__DIR__, "fixtures/fixture.bpg")
-  @nef_fixture Path.join(__DIR__, "fixtures/fixture.nef")
   @unknown_fixture Path.join(__DIR__, "fixtures/fixture.mystery")
 
-  test ".get_file_type raises error if passed a path it can't read" do
-    catch_error(MundaneElements.get_file_type('/not/a/real/path'))
+  test ".get_file_type raises mundane_error if passed a path it can't read" do
+    result = MundaneElements.get_file_type('/not/a/real/path')
+    assert result == :mundane_error
   end
 
   test ".get_file_type correctly identifies a jpg" do

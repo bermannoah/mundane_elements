@@ -5,7 +5,7 @@ defmodule MundaneElements do
       {:ok, binary} ->
         type(binary)
         _->
-          raise ArgumentError, message: "Couldn't open #{path_to_file}"
+          :mundane_error
       end
   end
 
