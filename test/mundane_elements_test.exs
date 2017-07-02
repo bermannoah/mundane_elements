@@ -162,7 +162,7 @@ defmodule MundaneElementsTest do
     assert result == :dmg
   end
 
-  @tag :skip # First attempt at solution isn't working
+  # @tag :skip # First attempt at solution isn't working
   test ".get_file_type correctly identifies a .mp4" do
     result = MundaneElements.get_file_type(@mp4_fixture)
     assert result == :mp4
