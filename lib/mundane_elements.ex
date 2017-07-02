@@ -63,13 +63,25 @@ defmodule MundaneElements do
 
   @dmg_signature <<0x78::size(8), 0x01::size(8)>>
 
-  @mp4_signature <<0x78::size(8), 0x01::size(8)>>
+  @mp4_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8)>> 
+  
+  @mp4_signature_alt_1 <<0x18::size(8)>> || <<0x20::size(8)>>
+  
+  @mp4_signature_alt_2 <<0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8)>>
+
+  @mp4_signature_2 <<0x33::size(8), 0x67::size(8), 0x70::size(8), 0x35::size(8)>>
+  
+  @mp4_signature_2_alt_1 <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x6D::size(8), 0x70::size(8), 0x34::size(8), 0x32::size(8)>> 
+  
+  @mp4_signature_2_alt_2 <<0x6D::size(8), 0x70::size(8), 0x34::size(8), 0x31::size(8), 0x6D::size(8), 0x70::size(8), 0x34::size(8), 0x32::size(8), 0x69::size(8), 0x73::size(8), 0x6F::size(8), 0x6D::size(8)>>
+  
+  @mp4_signature_3 <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x69::size(8), 0x73::size(8), 0x6F::size(8), 0x6D::size(8)>> || <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x1C::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x6D::size(8), 0x70::size(8), 0x34::size(8), 0x32::size(8), 0x0::size(8), 0x0::size(8), 0x0::size(8), 0x0::size(8)>>
 
   @mid_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
 
-  @mkv_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+  @mkv_signature <<0x6D::size(8), 0x61::size(8), 0x74::size(8), 0x72::size(8), 0x6f::size(8), 0x73::size(8), 0x6B::size(8), 0x61::size(8)>>
 
-  @webm_signature <<0x4D::size(8), 0x54::size(8), 0x68::size(8), 0x64::size(8)>>
+  @webm_signature <<0x1A::size(8), 0x45::size(8), 0xDF::size(8), 0xA3::size(8)>>
 
   @mov_signature <<0x0::size(8), 0x0::size(8), 0x0::size(8), 0x14::size(8), 0x66::size(8), 0x74::size(8), 0x79::size(8), 0x70::size(8), 0x71::size(8), 0x74::size(8), 0x20::size(8), 0x20::size(8)>>
 
@@ -188,9 +200,12 @@ defmodule MundaneElements do
   def type(<<@bz2_signature, rest::binary>>), do: :bz2
   def type(<<@seven_zip_signature, rest::binary>>), do: :seven_zip
   def type(<<@dmg_signature, rest::binary>>), do: :dmg
-  def type(<<@mp4_signature, rest::binary>>), do: :mp4
+  def type(<<@mp4_signature, @mp4_signature_alt_1, @mp4_signature_alt_2, rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_2, rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_2_alt_1, _, _, _, _, @mp4_signature_2_alt_2, rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_3, rest::binary>>), do: :mp4
   def type(<<@mid_signature, rest::binary>>), do: :mid
-  def type(<<@mkv_signature, rest::binary>>), do: :mkv
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mkv_signature, rest::binary>>), do: :mkv
   def type(<<@webm_signature, rest::binary>>), do: :webm
   def type(<<@mov_signature, rest::binary>>), do: :mov
   def type(<<_, _, _, _, @mov_signature_with_offset, rest::binary>>), do: :mov

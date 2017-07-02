@@ -162,7 +162,7 @@ defmodule MundaneElementsTest do
     assert result == :dmg
   end
 
-  @tag :skip # Needs more complex logic.
+  @tag :skip # First attempt at solution isn't working
   test ".get_file_type correctly identifies a .mp4" do
     result = MundaneElements.get_file_type(@mp4_fixture)
     assert result == :mp4
@@ -178,13 +178,11 @@ defmodule MundaneElementsTest do
     assert result == :mid
   end
 
-  @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .mkv" do
     result = MundaneElements.get_file_type(@mkv_fixture)
     assert result == :mkv
   end
 
-  @tag :skip # Needs more complex logic.
   test ".get_file_type correctly identifies a .webm" do
     result = MundaneElements.get_file_type(@webm_fixture)
     assert result == :webm
