@@ -1,5 +1,7 @@
 # MundaneElements
 
+[![Build Status](https://travis-ci.org/bermannoah/mundane_elements.svg?branch=master)](https://travis-ci.org/bermannoah/mundane_elements)
+
 **TODO: Add description**
 
 ## Installation
