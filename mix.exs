@@ -30,7 +30,7 @@ defmodule MundaneElements.Mixfile do
   defp package do
     [
       name: :mundane_elements,
-      files: ["lib", "test", "bench", "config", "mix.exs", "README*", "LICENSE*" ],
+      files: ["lib", "config", "mix.exs", "README*", "LICENSE*" ],
       maintainers: ["Noah Berman"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/bermannoah/mundane_elements"}
