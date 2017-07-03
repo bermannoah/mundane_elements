@@ -4,7 +4,7 @@ defmodule MundaneElements.Mixfile do
   def project do
     [
       app: :mundane_elements,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.4",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -23,7 +23,7 @@ defmodule MundaneElements.Mixfile do
 
   defp description do
     """
-    Mundane Elements is an Elixir port of the [file-type](https://github.com/sindresorhus/file-type) and [magic_bytes](https://github.com/julik/magic_bytes) libraries.
+    Mundane Elements is a system for checking the filetype of a given file using so-called Magic Bytes.
     """
   end
 
@@ -38,7 +38,7 @@ defmodule MundaneElements.Mixfile do
   end
 
   defp deps do
-    [{:benchfella, "~> 0.3.0"},
+    [{:benchfella, "~> 0.3.0", only: :dev},
     {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 end
