@@ -8,15 +8,12 @@ Many thanks to Sindre Sorhus and Julik Tarkhanov for the work they've already do
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mundane_elements` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `mundane_elements` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:mundane_elements, "~> 0.1.0"}]
+  [{:mundane_elements, "~> 0.1.1"}]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/mundane_elements](https://hexdocs.pm/mundane_elements).
+The docs can be found at [https://hexdocs.pm/mundane_elements](https://hexdocs.pm/mundane_elements).
