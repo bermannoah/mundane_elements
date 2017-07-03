@@ -9,9 +9,9 @@ defmodule MundaneElements do
       end
   end
 
-  @png_signature <<0x89::size(8), 0x50::size(8), 0x4E::size(8), 0x47::size(8), 0x0D::size(8), 0x0A::size(8), 0x1A::size(8), 0x0A::size(8)>>
-
   @jpg_signature <<0xFF::size(8), 0xD8::size(8), 0xFF::size(8)>>
+
+  @png_signature <<0x89::size(8), 0x50::size(8), 0x4E::size(8), 0x47::size(8), 0x0D::size(8), 0x0A::size(8), 0x1A::size(8), 0x0A::size(8)>>
 
   @gif_signature <<0x47::size(8), 0x49::size(8), 0x46::size(8)>>
 
@@ -169,8 +169,8 @@ defmodule MundaneElements do
 
   @bpg_signature <<0x42::size(8), 0x50::size(8), 0x47::size(8), 0xFB::size(8)>>
 
-  def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
+  def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@gif_signature, rest::binary>>), do: :gif
   def type(<<_, _, _, _, _, _, _, _, @webp_signature, rest::binary>>), do: :webp
   def type(<<@flif_signature, rest::binary>>), do: :flif
