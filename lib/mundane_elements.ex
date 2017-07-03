@@ -121,9 +121,9 @@ defmodule MundaneElements do
 
   @woff2_signature_alt <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8)>> || <<0x4F::size(8), 0x54::size(8), 0x54::size(8), 0x4F::size(8)>>
 
-  @eot_signature <<0x4c::size(8), 0x50::size(8)>>
+  @eot_signature <<0x4C::size(8), 0x50::size(8)>>
 
-  @eot_signature_alt <<0x00::size(8), 0x00::size(8), 0x01::size(8)>> || <<0x00=1::size(8), 0x00::size(8), 0x02::size(8)>> || <<0x02::size(8), 0x00::size(8), 0x02::size(8)>>
+  @eot_signature_alt <<0x02::size(8), 0x00::size(8), 0x02::size(8)>> || <<0x01::size(8), 0x00::size(8), 0x02::size(8)>> || <<0x00::size(8), 0x00::size(8), 0x01::size(8)>>
 
   @ttf_signature <<0x00::size(8), 0x01::size(8), 0x00::size(8), 0x00::size(8), 0x00::size(8)>>
 
@@ -161,7 +161,9 @@ defmodule MundaneElements do
 
   @mts_signature <<0x47::size(8)>>
 
-  @mts_signature_alt <<0x47::size(8)>> || <<0x47::size(8)>>
+  @mts_signature_alt_1 <<0x47::size(8)>>
+
+  @mts_signature_alt_2 <<0x47::size(8)>>
 
   @blend_signature <<0x42::size(8), 0x4C::size(8), 0x45::size(8), 0x4E::size(8), 0x44::size(8), 0x45::size(8), 0x52::size(8)>>
 
@@ -221,8 +223,7 @@ defmodule MundaneElements do
   def type(<<@wasm_signature, rest::binary>>), do: :wasm
   def type(<<@woff_signature, @woff_signature_alt, rest::binary>>), do: :woff
   def type(<<@woff2_signature, @woff2_signature_alt, rest::binary>>), do: :woff2
-  # The EOT check below is missing the last part of the signature and may not be safe to use.
-  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @eot_signature, rest::binary>>), do: :eot
+  def type(<<_, _, _, _, _, _, _, _, @eot_signature_alt, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @eot_signature, rest::binary>>), do: :eot
   def type(<<@otf_signature, rest::binary>>), do: :otf
   def type(<<@flv_signature, rest::binary>>), do: :flv
   def type(<<@ps_signature, rest::binary>>), do: :ps
@@ -237,8 +238,8 @@ defmodule MundaneElements do
   def type(<<@lz_signature, rest::binary>>), do: :lz
   def type(<<@msi_signature, rest::binary>>), do: :msi
   def type(<<@mxf_signature, rest::binary>>), do: :mxf
-  # The MTS check below is missing the last part(s) of the signature and may not be safe to use.
-  def type(<<_, _, _, _, @mts_signature, rest::binary>>), do: :mts
+  def type(<<_, _, _, _, @mts_signature, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,   _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mts_signature_alt_1, rest::binary>>), do: :mts
+  def type(<<_, _, _, _, @mts_signature, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,   _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mts_signature_alt_2, rest::binary>>), do: :mts
   def type(<<@blend_signature, rest::binary>>), do: :blend
   def type(<<@bpg_signature, rest::binary>>), do: :bpg
 
