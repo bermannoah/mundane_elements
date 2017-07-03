@@ -17,3 +17,10 @@ end
 ```
 
 The docs can be found at [https://hexdocs.pm/mundane_elements](https://hexdocs.pm/mundane_elements).
+
+## Contributing
+
+I'll be honest: I'm still learning Elixir. So there might be some mistakes or bugs that need fixing. Please do submit
+issues and suggest fixes or improvements. I have a boilerplate contribution guideline file which you can see above.
+
+Thanks much!
