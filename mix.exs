@@ -30,7 +30,7 @@ defmodule MundaneElements.Mixfile do
   defp package do
     [
       name: :mundane_elements,
-      files: ["lib", "test", "bench", "config", "mix.exs", "README*", "readme*", "LICENSE*", "license*" ],
+      files: ["lib", "test", "bench", "config", "mix.exs", "README*", "LICENSE*" ],
       maintainers: ["Noah Berman"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/bermannoah/mundane_elements"}
@@ -38,6 +38,7 @@ defmodule MundaneElements.Mixfile do
   end
 
   defp deps do
-    [{:benchfella, "~> 0.3.0"}]
+    [{:benchfella, "~> 0.3.0"},
+    {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 end

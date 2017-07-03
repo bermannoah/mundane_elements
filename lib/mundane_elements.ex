@@ -1,4 +1,20 @@
 defmodule MundaneElements do
+  @moduledoc """
+  This is the MundaneElements module.
+  """
+
+  @doc """
+  Checks the binary of the given 'path_to_file' for the correct signature. Essentially
+  a more specific way of identifying a particular file than, say, using the file extension.
+
+  Returns ':filetype'
+
+  ## Examples
+
+    iex> MundaneElements.get_file_type('/path/to/a/file/file.jpg')
+    :jpg
+
+  """
 
   def get_file_type(path_to_file) do
     case File.read(path_to_file) do
@@ -169,6 +185,13 @@ defmodule MundaneElements do
 
   @bpg_signature <<0x42::size(8), 0x50::size(8), 0x47::size(8), 0xFB::size(8)>>
 
+
+  @doc """
+  Pattern matches each stored signature against the file to check. Will continue
+  until it finds a match or returns :unknown.
+
+  Returns ':a_filetype' or ':unknown'
+  """
   def type(<<@jpg_signature, rest::binary>>), do: :jpg
   def type(<<@png_signature, rest::binary>>), do: :png
   def type(<<@gif_signature, rest::binary>>), do: :gif
