@@ -12,7 +12,7 @@ The package can be installed by adding `mundane_elements` to your list of depend
 
 ```elixir
 def deps do
-  [{:mundane_elements, "~> 0.1.1"}]
+  [{:mundane_elements, "~> 0.1.2"}]
 end
 ```
 
