@@ -125,8 +125,6 @@ defmodule MundaneElements do
 
   @swf_signature <<0x46::size(8), 0x57::size(8), 0x53::size(8)>> || <<0x43::size(8), 0x57::size(8), 0x53::size(8)>>
 
-  @swf_signature_alt <<0x57::size(8), 0x53::size(8)>>
-
   @rtf_signature <<0x7B::size(8), 0x5C::size(8), 0x72::size(8), 0x74::size(8), 0x66::size(8)>>
 
   @woff_signature <<0x77::size(8), 0x4F::size(8), 0x46::size(8), 0x46::size(8)>>
@@ -192,79 +190,79 @@ defmodule MundaneElements do
 
   Returns ':a_filetype' or ':unknown'
   """
-  def type(<<@jpg_signature, rest::binary>>), do: :jpg
-  def type(<<@png_signature, rest::binary>>), do: :png
-  def type(<<@gif_signature, rest::binary>>), do: :gif
-  def type(<<_, _, _, _, _, _, _, _, @webp_signature, rest::binary>>), do: :webp
-  def type(<<@flif_signature, rest::binary>>), do: :flif
-  def type(<<@cr2_signature, rest::binary>>), do: :cr2
-  def type(<<@cr2_signature, _, _, _, _, _, _, _, _, @cr2_signature_alt, rest::binary>>), do: :cr2
-  def type(<<@tif_little_endian_signature, rest::binary>>), do: :tif
-  def type(<<@tif_big_endian_signature, rest::binary>>), do: :tif
-  def type(<<@bmp_signature, rest::binary>>), do: :bmp
-  def type(<<@jxr_signature, rest::binary>>), do: :jxr
-  def type(<<@psd_signature, rest::binary>>), do: :psd
-  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @epub_signature, rest::binary>>), do: :epub
-  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @xpi_signature, rest::binary>>), do: :xpi
-  def type(<<@zip_signature, rest::binary>>), do: :zip
-  def type(<<@m4v_signature, rest::binary>>), do: :m4v
+  def type(<<@jpg_signature, _rest::binary>>), do: :jpg
+  def type(<<@png_signature, _rest::binary>>), do: :png
+  def type(<<@gif_signature, _rest::binary>>), do: :gif
+  def type(<<_, _, _, _, _, _, _, _, @webp_signature, _rest::binary>>), do: :webp
+  def type(<<@flif_signature, _rest::binary>>), do: :flif
+  def type(<<@cr2_signature, _rest::binary>>), do: :cr2
+  def type(<<@cr2_signature, _, _, _, _, _, _, _, _, @cr2_signature_alt, _rest::binary>>), do: :cr2
+  def type(<<@tif_little_endian_signature, _rest::binary>>), do: :tif
+  def type(<<@tif_big_endian_signature, _rest::binary>>), do: :tif
+  def type(<<@bmp_signature, _rest::binary>>), do: :bmp
+  def type(<<@jxr_signature, _rest::binary>>), do: :jxr
+  def type(<<@psd_signature, _rest::binary>>), do: :psd
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @epub_signature, _rest::binary>>), do: :epub
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @xpi_signature, _rest::binary>>), do: :xpi
+  def type(<<@zip_signature, _rest::binary>>), do: :zip
+  def type(<<@m4v_signature, _rest::binary>>), do: :m4v
   # At the moment the monstrosity below seems to be the way to handle this offset for TAR files
-  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @tar_signature, rest::binary>>), do: :tar
-  def type(<<@rar_signature, rest::binary>>), do: :rar
-  def type(<<@mpg_signature, rest::binary>>), do: :mpg
-  def type(<<_, _, _, _, @m4a_signature, rest::binary>>), do: :m4a
-  def type(<<@ttf_signature, rest::binary>>), do: :ttf
-  def type(<<@ico_signature, rest::binary>>), do: :ico
-  def type(<<@gz_signature, rest::binary>>), do: :gz
-  def type(<<@bz2_signature, rest::binary>>), do: :bz2
-  def type(<<@seven_zip_signature, rest::binary>>), do: :seven_zip
-  def type(<<@dmg_signature, rest::binary>>), do: :dmg
-  def type(<<@mp4_signature, rest::binary>>), do: :mp4
-  def type(<<@mp4_signature_1, rest::binary>>), do: :mp4
-  def type(<<@mp4_signature_2, rest::binary>>), do: :mp4
-  def type(<<@mp4_signature_3, _, _, _, @mp4_signature_3_with_offset, rest::binary>>), do: :mp4
-  def type(<<@mp4_signature_4, rest::binary>>), do: :mp4
-  def type(<<@mp4_signature_5, rest::binary>>), do: :mp4
-  def type(<<@mid_signature, rest::binary>>), do: :mid
-  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mkv_signature, rest::binary>>), do: :mkv
-  def type(<<@webm_signature, rest::binary>>), do: :webm
-  def type(<<@mov_signature, rest::binary>>), do: :mov
-  def type(<<_, _, _, _, @mov_signature_with_offset, rest::binary>>), do: :mov
-  def type(<<@avi_signature, _, _, _, _, @avi_signature_alt, rest::binary>>), do: :avi
-  def type(<<@wmv_signature, rest::binary>>), do: :wmv
-  def type(<<@mp3_signature, rest::binary>>), do: :mp3
-  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @opus_signature, rest::binary>>), do: :opus
-  def type(<<@ogg_signature, rest::binary>>), do: :ogg
-  def type(<<@flac_signature, rest::binary>>), do: :flac
-  def type(<<@wav_signature, _, _, _, _, @wav_signature_alt, rest::binary>>), do: :wav
-  def type(<<@amr_signature, rest::binary>>), do: :amr
-  def type(<<@pdf_signature, rest::binary>>), do: :pdf
-  def type(<<@exe_signature, rest::binary>>), do: :exe
-  def type(<<@crx_signature, rest::binary>>), do: :crx
-  def type(<<@swf_signature, rest::binary>>), do: :swf
-  def type(<<@rtf_signature, rest::binary>>), do: :rtf
-  def type(<<@wasm_signature, rest::binary>>), do: :wasm
-  def type(<<@woff_signature, @woff_signature_alt, rest::binary>>), do: :woff
-  def type(<<@woff2_signature, @woff2_signature_alt, rest::binary>>), do: :woff2
-  def type(<<_, _, _, _, _, _, _, _, @eot_signature_alt, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @eot_signature, rest::binary>>), do: :eot
-  def type(<<@otf_signature, rest::binary>>), do: :otf
-  def type(<<@flv_signature, rest::binary>>), do: :flv
-  def type(<<@ps_signature, rest::binary>>), do: :ps
-  def type(<<@xz_signature, rest::binary>>), do: :xz
-  def type(<<@sqlite_signature, rest::binary>>), do: :sqlite
-  def type(<<@nes_signature, rest::binary>>), do: :nes
-  def type(<<@cab_signature, rest::binary>>), do: :cab
-  def type(<<@deb_signature, rest::binary>>), do: :deb
-  def type(<<@ar_signature, rest::binary>>), do: :ar
-  def type(<<@rpm_signature, rest::binary>>), do: :rpm
-  def type(<<@z_signature, rest::binary>>), do: :Z
-  def type(<<@lz_signature, rest::binary>>), do: :lz
-  def type(<<@msi_signature, rest::binary>>), do: :msi
-  def type(<<@mxf_signature, rest::binary>>), do: :mxf
-  def type(<<_, _, _, _, @mts_signature, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,   _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mts_signature_alt_1, rest::binary>>), do: :mts
-  def type(<<_, _, _, _, @mts_signature, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,   _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mts_signature_alt_2, rest::binary>>), do: :mts
-  def type(<<@blend_signature, rest::binary>>), do: :blend
-  def type(<<@bpg_signature, rest::binary>>), do: :bpg
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @tar_signature, _rest::binary>>), do: :tar
+  def type(<<@rar_signature, _rest::binary>>), do: :rar
+  def type(<<@mpg_signature, _rest::binary>>), do: :mpg
+  def type(<<_, _, _, _, @m4a_signature, _rest::binary>>), do: :m4a
+  def type(<<@ttf_signature, _rest::binary>>), do: :ttf
+  def type(<<@ico_signature, _rest::binary>>), do: :ico
+  def type(<<@gz_signature, _rest::binary>>), do: :gz
+  def type(<<@bz2_signature, _rest::binary>>), do: :bz2
+  def type(<<@seven_zip_signature, _rest::binary>>), do: :seven_zip
+  def type(<<@dmg_signature, _rest::binary>>), do: :dmg
+  def type(<<@mp4_signature, _rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_1, _rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_2, _rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_3, _, _, _, @mp4_signature_3_with_offset, _rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_4, _rest::binary>>), do: :mp4
+  def type(<<@mp4_signature_5, _rest::binary>>), do: :mp4
+  def type(<<@mid_signature, _rest::binary>>), do: :mid
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mkv_signature, _rest::binary>>), do: :mkv
+  def type(<<@webm_signature, _rest::binary>>), do: :webm
+  def type(<<@mov_signature, _rest::binary>>), do: :mov
+  def type(<<_, _, _, _, @mov_signature_with_offset, _rest::binary>>), do: :mov
+  def type(<<@avi_signature, _, _, _, _, @avi_signature_alt, _rest::binary>>), do: :avi
+  def type(<<@wmv_signature, _rest::binary>>), do: :wmv
+  def type(<<@mp3_signature, _rest::binary>>), do: :mp3
+  def type(<<_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @opus_signature, _rest::binary>>), do: :opus
+  def type(<<@ogg_signature, _rest::binary>>), do: :ogg
+  def type(<<@flac_signature, _rest::binary>>), do: :flac
+  def type(<<@wav_signature, _, _, _, _, @wav_signature_alt, _rest::binary>>), do: :wav
+  def type(<<@amr_signature, _rest::binary>>), do: :amr
+  def type(<<@pdf_signature, _rest::binary>>), do: :pdf
+  def type(<<@exe_signature, _rest::binary>>), do: :exe
+  def type(<<@crx_signature, _rest::binary>>), do: :crx
+  def type(<<@swf_signature, _rest::binary>>), do: :swf
+  def type(<<@rtf_signature, _rest::binary>>), do: :rtf
+  def type(<<@wasm_signature, _rest::binary>>), do: :wasm
+  def type(<<@woff_signature, @woff_signature_alt, _rest::binary>>), do: :woff
+  def type(<<@woff2_signature, @woff2_signature_alt, _rest::binary>>), do: :woff2
+  def type(<<_, _, _, _, _, _, _, _, @eot_signature_alt, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @eot_signature, _rest::binary>>), do: :eot
+  def type(<<@otf_signature, _rest::binary>>), do: :otf
+  def type(<<@flv_signature, _rest::binary>>), do: :flv
+  def type(<<@ps_signature, _rest::binary>>), do: :ps
+  def type(<<@xz_signature, _rest::binary>>), do: :xz
+  def type(<<@sqlite_signature, _rest::binary>>), do: :sqlite
+  def type(<<@nes_signature, _rest::binary>>), do: :nes
+  def type(<<@cab_signature, _rest::binary>>), do: :cab
+  def type(<<@deb_signature, _rest::binary>>), do: :deb
+  def type(<<@ar_signature, _rest::binary>>), do: :ar
+  def type(<<@rpm_signature, _rest::binary>>), do: :rpm
+  def type(<<@z_signature, _rest::binary>>), do: :Z
+  def type(<<@lz_signature, _rest::binary>>), do: :lz
+  def type(<<@msi_signature, _rest::binary>>), do: :msi
+  def type(<<@mxf_signature, _rest::binary>>), do: :mxf
+  def type(<<_, _, _, _, @mts_signature, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,   _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mts_signature_alt_1, _rest::binary>>), do: :mts
+  def type(<<_, _, _, _, @mts_signature, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,   _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, @mts_signature_alt_2, _rest::binary>>), do: :mts
+  def type(<<@blend_signature, _rest::binary>>), do: :blend
+  def type(<<@bpg_signature, _rest::binary>>), do: :bpg
 
   def type(_), do: :unknown
 
